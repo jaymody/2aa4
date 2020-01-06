@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\oddsidemargin 0mm
+\evensidemargin 0mm
+\textwidth 160mm
+\textheight 200mm
+
+\pagestyle {plain}
+\pagenumbering{arabic}
+
+\newcounter{stepnum}
+
+\title{Assignment 1 Solution}
+\author{?}
+\date{\today}
+
+\begin {document}
+
+\maketitle
+
+Intro blurb.
+
+\section{Testing of the Original Program}
+
+Description of approach to testing.  Rationale for test case selection.  Summary
+of results.  Any problems uncovered through testing.
+
+\section{Results of Testing Partner's Code}
+
+Consequences of running partner's code.  Success, or lack of success, running
+test cases.  Explanation of why it worked, or didn't.
+
+\section{Critique of Given Design Specification}
+
+Advantages and disadvantages of the given design specification.
+
+\section{Answers to Questions}
+
+\begin{enumerate}[(a)]
+
+\item 
+
+\end{enumerate}
+
+\newpage
+
+\lstset{language=Python, basicstyle=\tiny, breaklines=true, showspaces=false,
+  showstringspaces=false, breakatwhitespace=true}
+%\lstset{language=C,linewidth=.94\textwidth,xleftmargin=1.1cm}
+
+\def\thesection{\Alph{section}}
+
+\section{Code for date\_adt.py}
+
+\noindent \lstinputlisting{../src/date_adt.py}
+
+\newpage
+
+\section{Code for pos\_adt.py}
+
+\noindent \lstinputlisting{../src/pos_adt.py}
+
+\newpage
+
+\section{Code for test\_driver.py}
+
+\noindent \lstinputlisting{../src/test_driver.py}
+
+\newpage
+
+\section{Code for Partner's CalcModule.py}
+
+\noindent \lstinputlisting{../partner/pos_adt.py}
+
+\end {document}

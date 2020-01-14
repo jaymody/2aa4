@@ -39,34 +39,35 @@ class DateT:
   ## @brief ?
   #  @return ?
   def next(self):
-    pass
+    return self.__date + datetime.timedelta(days=1)
 
   ## @brief ?
   #  @return ?
   def prev(self):
-    pass
+    return self.__date - datetime.timedelta(days=1)
 
   ## @brief ?
   #  @return ?
-  def before(self):
-    pass
+  def before(self, d):
+    return self.__date < d
 
   ## @brief ?
   #  @return ?
-  def after(self):
-    pass
+  def after(self, d):
+    return d < self.__date
 
   ## @brief ?
   #  @return ?
-  def equal(self):
-    pass
+  def equal(self, d):
+    return self.__date == d
 
   ## @brief ?
   #  @return ?
-  def add_days(self):
-    pass
+  def add_days(self, n):
+    return self.__date + datetime.timedelta(days=n)
 
   ## @brief ?
   #  @return ?
-  def days_between(self):
-    pass
+  def days_between(self, d):
+    # ask about whether to consider negative number of days, days from which to which?
+    return abs((self.__date - d).days)

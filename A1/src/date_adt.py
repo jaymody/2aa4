@@ -67,7 +67,6 @@ class DateT:
 
   ## @brief Returns the number of days between this day and date d.
   #  @param d A DateT object.
-  #  @return The number of days between this day and date d.
+  #  @return The number of days between this day and date d (negative if d comes before this date).
   def days_between(self, d):
-    # ask about whether to consider negative number of days, days from which to which?
-    return abs((self.__date - d).days)
+    return (d - self.__date).days

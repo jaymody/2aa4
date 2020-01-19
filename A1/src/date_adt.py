@@ -34,12 +34,14 @@ class DateT:
     ## @brief Returns a date that is 1 day ahead.
     #  @return A DateT object that is 1 day ahead.
     def next(self):
-        return self.__date + datetime.timedelta(days=1)
+        new_date = self.__date + datetime.timedelta(days=1)
+        return DateT(new_date.day, new_date.month, new_date.year)
 
     ## @brief Returns a date that is 1 day behind.
     #  @return A DateT object that is 1 day behind.
     def prev(self):
-        return self.__date - datetime.timedelta(days=1)
+        new_date = self.__date - datetime.timedelta(days=1)
+        return DateT(new_date.day, new_date.month, new_date.year)
 
     ## @brief Determines if this date comes before date d.
     #  @param d A DateT object.
@@ -63,7 +65,8 @@ class DateT:
     #  @param n An integer representing the number of days to skip ahead.
     #  @return A date that is n days ahead.
     def add_days(self, n):
-        return self.__date + datetime.timedelta(days=n)
+        new_date = self.__date + datetime.timedelta(days=n)
+        return DateT(new_date.day, new_date.month, new_date.year)
 
     ## @brief Returns the number of days between this day and date d.
     #  @param d A DateT object.

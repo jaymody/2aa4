@@ -12,11 +12,23 @@ def test_value_err(tests):
     for test in tests:
         try:
             eval(test)
+            print("FAIL: {} did not return ValueError".format(test))
         except ValueError:
-            print("PASS: {} returned ValueError".format(test))
+            print("PASS: {} threw ValueError".format(test))
             passed += 1
         except:
-            print("FAIL: {} did not return ValueError".format(test))
+            print("FAIL: {} did not throw ValueError".format(test))
+    return passed
+
+def test_no_err(tests):
+    passed = 0
+    for test in tests:
+        try:
+            eval(test)
+            print("PASS: {} ran with no exceptions".format(test))
+            passed += 1
+        except:
+            print("FAIL: {} returned an exception".format(test))
     return passed
 
 def test_eq(tests):

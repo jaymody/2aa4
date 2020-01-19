@@ -3,7 +3,6 @@
 #  @brief Tests driver for the DateT ADT and GPosT ADT.
 #  @date ``
 
-from math import radians
 from date_adt import DateT
 from pos_adt import GPosT
 

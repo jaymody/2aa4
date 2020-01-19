@@ -72,4 +72,4 @@ class DateT:
     #  @param d A DateT object.
     #  @return The number of days between this day and date d (negative if d comes before this date).
     def days_between(self, d):
-        return (d - self.__date).days
+        return (d.__date - self.__date).days

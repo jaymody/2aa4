@@ -20,7 +20,7 @@ class DateT:
   #  @return The day of the month.
   def day(self):
     return self.__date.day
-  
+
   ## @brief Gets the month of the year.
   #  @return The month of the year.
   def month(self):

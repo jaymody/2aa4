@@ -18,7 +18,7 @@ class GPosT:
   #  @return ?
   def lat(self):
     return self.__lat
-  
+
   ## @brief ?
   #  @return ?
   def long(self):

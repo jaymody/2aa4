@@ -39,8 +39,8 @@ def test_neq(tests):
             print("FAIL: {} != {}".format(l, r))
     return passed
 
-# module 1 test
-def date_test():
+# DateT tests
+def test_DateT():
     passed = 0
     total = 0
 
@@ -166,8 +166,8 @@ def date_test():
     print("### report ###")
     print("{} of {} tests passed".format(passed, total))
 
-# module 2 test
-def pos_test():
+# GPosT tests
+def test_GPosT():
     passed = 0
     total = 0
 
@@ -180,9 +180,9 @@ def pos_test():
 # main function call
 if __name__ == "__main__":
     print("########## DateT Tests ##########")
-    date_test()
+    test_DateT()
 
     print("\n"*5)
 
     print("########## GPosT Tests ##########")
-    pos_test()
+    test_GPosT()

@@ -10,7 +10,13 @@ class GPosT:
     #  @
     #  @param lat
     #  @param long
+    #  @throws ValueError
     def __init__(self, lat, long):
+        if not (-180 <= long and long <= 180):
+            raise ValueError("long (longitude) must be between -180 and 180")
+        if not (-90 <= lat and lat <= 90)
+            raise ValueError("lat (latitude) must be between -90 and 90")
+
         self.__lat = lat
         self.__long = long
 

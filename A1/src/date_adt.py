@@ -47,19 +47,19 @@ class DateT:
     #  @param d A DateT object.
     #  @return A boolean that is True if this date comes before date d, else False.
     def before(self, d):
-        return self.__date < d
+        return self.__date < d.__date
 
     ## @brief Determines if this date comes after date d.
     #  @param d A DateT object.
     #  @return A boolean that is True if this date comes after date d, else False.
     def after(self, d):
-        return self.__date > d
+        return self.__date > d.__date
 
     ## @brief Determines if this date and date d are equal.
     #  @param d A DateT object.
     #  @return A boolean that is True if this date and date d are equal, else False.
     def equal(self, d):
-        return self.__date == d
+        return self.__date == d.__date
 
     ## @brief Returns a date that is n days ahead.
     #  @param n An integer representing the number of days to skip ahead.

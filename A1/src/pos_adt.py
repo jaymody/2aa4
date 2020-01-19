@@ -22,8 +22,8 @@ class GPosT:
         if not (-90 <= lat and lat <= 90):
             raise ValueError("lat (latitude) must be between -90 and 90")
 
-        self.__lat = radians(lat)
-        self.__long = radians(long)
+        self.__lat = lat
+        self.__long = long
 
     ## @brief ?
     #  @return ?
@@ -59,12 +59,14 @@ class GPosT:
     #  @param d
     def move(self, b, d):
         b = radians(b)
+        lat = radians(self.__lat)
+        long = radians(self.__long)
 
         angular_dist = d / self.__R
-        target_lat = asin(sin(self.__lat) * cos(angular_dist) + cos(self.__lat) * sin(angular_dist) * sin(b))
-        y = sin(b) * sin(angular_dist) * cos(self.__lat)
-        x = cos(angular_dist) - sin(self.__lat) * target_lat
-        target_long = self.__long + atan2(y, x)
+        target_lat = asin(sin(lat) * cos(angular_dist) + cos(lat) * sin(angular_dist) * sin(b))
+        y = sin(b) * sin(angular_dist) * cos(lat)
+        x = cos(angular_dist) - sin(lat) * target_lat
+        target_long = long + atan2(y, x)
 
         self.__lat = target_lat
         self.__long = target_long
@@ -72,9 +74,12 @@ class GPosT:
     ## @brief ?
     #  @return ?
     def distance(self, p):
-        delta_long = p.__long - self.__long
-        delta_lat = p.__lat - self.__lat
-        a = sin(0.5 * delta_lat)**2 + cos(self.__lat) * cos(p.__lat) * sin(0.5 * delta_long)
+        lat = radians(self.__lat)
+        long = radians(self.__long)
+
+        delta_long = p.__long - long
+        delta_lat = p.__lat - lat
+        a = sin(0.5 * delta_lat)**2 + cos(lat) * cos(p.__lat) * sin(0.5 * delta_long)
         c = 2 * atan2(a**0.5, (1-a)**0.5)
         distance = self.__R * c
         return distance

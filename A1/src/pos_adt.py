@@ -4,6 +4,7 @@
 #  @date ?
 
 from math import cos, sin, asin, atan2, radians
+from date_adt import DateT
 
 ## @brief An ADT ...
 class GPosT:
@@ -47,6 +48,28 @@ class GPosT:
         return self.__lat > p.__lat
 
     ## @brief ?
+    #  @param p
+    #  @return ?
+    def equal(self, p):
+        distance = self.distance(p)
+        return distance < 1.0
+
+    ## @brief ?
+    #  @param b
+    #  @param d
+    def move(self, b, d):
+        b = radians(b)
+
+        angular_dist = d / self.__R
+        target_lat = asin(sin(self.__lat) * cos(angular_dist) + cos(self.__lat) * sin(angular_dist) * sin(b))
+        y = sin(b) * sin(angular_dist) * cos(self.__lat)
+        x = cos(angular_dist) - sin(self.__lat) * target_lat
+        target_long = self.__long + atan2(y, x)
+
+        self.__lat = target_lat
+        self.__long = target_long
+
+    ## @brief ?
     #  @return ?
     def distance(self, p):
         delta_long = p.__long - self.__long
@@ -55,3 +78,13 @@ class GPosT:
         c = 2 * atan2(a**0.5, (1-a)**0.5)
         distance = self.__R * c
         return distance
+
+    ## @brief ?
+    #  @param p
+    #  @param d
+    #  @param s
+    #  @return ?
+    def arrival_date(self, p, d, s):
+        distance = self.distance(p)
+        days = distance / s
+        return d.add_days(days=days)

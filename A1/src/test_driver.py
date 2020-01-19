@@ -3,6 +3,7 @@
 #  @brief Tests driver for the DateT ADT and GPosT ADT.
 #  @date ``
 
+from math import radians
 from date_adt import DateT
 from pos_adt import GPosT
 
@@ -78,7 +79,6 @@ def test_DateT():
     total += len(eq_tests)
     passed += test_eq(eq_tests)
 
-
     neq_tests = [
         ("DateT(31, 1, 2012).day()", "30"),
         ("DateT(14, 2, 2012).day()", "-14")
@@ -93,7 +93,6 @@ def test_DateT():
     ]
     total += len(eq_tests)
     passed += test_eq(eq_tests)
-
 
     neq_tests = [
         ("DateT(31, 1, 2012).month()", "2"),
@@ -110,7 +109,6 @@ def test_DateT():
     ]
     total += len(eq_tests)
     passed += test_eq(eq_tests)
-
 
     neq_tests = [
         ("DateT(31, 1, 2012).year()", "-2012"),
@@ -183,7 +181,83 @@ def test_GPosT():
     passed = 0
     total = 0
 
-    # unit tests here
+    print("\n----- invalid __init__() params tests -----")
+    value_err_tests = [
+        "GPosT(-90.0001, 0)",
+        "GPosT(90.0001, 0)",
+        "GPosT(0, -180.0001)",
+        "GPosT(0, 180.0001)",
+    ]
+    total += len(value_err_tests)
+    passed += test_value_err(value_err_tests)
+
+    no_err_tests = [
+        "GPosT(-90., 0)",
+        "GPosT(90., 0)",
+        "GPosT(0, -180.)",
+        "GPosT(0, 180.)",
+    ]
+    total += len(no_err_tests)
+    passed += test_no_err(no_err_tests)
+
+    print("\n----- lat() tests -----")
+    eq_tests = [
+        ("GPosT(23., 0).lat()", "23"),
+        ("GPosT(-12.1231, 1.).lat()", "-12.1231")
+    ]
+    total += len(eq_tests)
+    passed += test_eq(eq_tests)
+
+    neq_tests = [
+        ("GPosT(23.000001, 23).lat()", "23"),
+        ("GPosT(23, -23).lat()", "-23")
+    ]
+    total += len(neq_tests)
+    passed += test_neq(neq_tests)
+
+    print("\n----- long() tests -----")
+    eq_tests = [
+        ("GPosT(23., 0).long()", "0"),
+        ("GPosT(2.1231, 1.).long()", "1.")
+    ]
+    total += len(eq_tests)
+    passed += test_eq(eq_tests)
+
+    neq_tests = [
+        ("GPosT(1.01, 1.01).long()", "1."),
+        ("GPosT(23, -23).long()", "23")
+    ]
+    total += len(neq_tests)
+    passed += test_neq(neq_tests)
+
+    print("\n----- west_of() tests -----")
+    eq_tests = [
+        ("GPosT(1, 0).west_of(GPosT(2, 1))", "True"),
+        ("GPosT(28, -2).west_of(GPosT(21, -20))", "False"),
+    ]
+    total += len(eq_tests)
+    passed += test_eq(eq_tests)
+
+    print("\n----- north_of() tests -----")
+    eq_tests = [
+        ("GPosT(31, 12).north_of(GPosT(30, 14))", "True"),
+        ("GPosT(-21, 3).north_of(GPosT(-20, 2))", "False"),
+    ]
+    total += len(eq_tests)
+    passed += test_eq(eq_tests)
+
+    # print("\n----- equal() (and distance()) tests -----")
+    # eq_tests = []
+    # total += len(eq_tests)
+    # passed += test_eq(eq_tests)
+
+    # print("\n----- move() tests -----")
+    # need special test cases
+
+    # print("\n----- arrival_date() tests -----")
+    # eq_tests = []
+    # total += len(eq_tests)
+    # passed += test_eq(eq_tests)
 
     print()
     print("### report ###")

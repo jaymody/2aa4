@@ -12,7 +12,7 @@ class DateT:
     ## @brief Constructor for DateT objects.
     #  @param d The day of the month (integer from 1-31)
     #  @param m The month of the year (integer from 1-12)
-    #  @param y The year
+    #  @param y The year (integer from 1-9999)
     def __init__(self, d, m, y):
         self.__date = datetime.date(y, m, d)
 

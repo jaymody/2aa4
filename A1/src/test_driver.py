@@ -1,7 +1,7 @@
 ## @file test_driver.py
 #  @author Jay Mody
 #  @brief Tests driver for the DateT ADT and GPosT ADT.
-#  @date ``
+#  @date 20/01/20 (dd/mm/yy)
 
 from date_adt import DateT
 from pos_adt import GPosT
@@ -241,6 +241,14 @@ def test_GPosT():
     eq_tests = [
         ("GPosT(31, 12).north_of(GPosT(30, 14))", "True"),
         ("GPosT(-21, 3).north_of(GPosT(-20, 2))", "False"),
+    ]
+    total += len(eq_tests)
+    passed += test_eq(eq_tests)
+
+    print("\n----- distance() tests (accurate to 1km) -----")
+    eq_tests = [
+        ("abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1", True),
+        ("abs(1 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1", "False"),
     ]
     total += len(eq_tests)
     passed += test_eq(eq_tests)

@@ -1,7 +1,7 @@
 ## @file pos_adt.py
 #  @author Jay Mody
 #  @brief Provides the GPosT ADT class for representing latitude/longitude points on Earth.
-#  @date 19/01/20 (dd/mm/yy)
+#  @date 20/01/20 (dd/mm/yy)
 
 from math import cos, sin, asin, atan2, radians, degrees
 from date_adt import DateT

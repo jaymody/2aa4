@@ -6,276 +6,121 @@
 from date_adt import DateT
 from pos_adt import GPosT
 
-# unit test functions
-def test_value_err(tests):
-    passed = 0
-    for test in tests:
-        try:
-            eval(test)
-            print("FAIL: {} did not return ValueError".format(test))
-        except ValueError:
-            print("PASS: {} threw ValueError".format(test))
-            passed += 1
-        except:
-            print("FAIL: {} did not throw ValueError".format(test))
-    return passed
-
-def test_no_err(tests):
-    passed = 0
-    for test in tests:
-        try:
-            eval(test)
-            print("PASS: {} ran with no exceptions".format(test))
-            passed += 1
-        except:
-            print("FAIL: {} returned an exception".format(test))
-    return passed
-
-def test_eq(tests):
-    passed = 0
-    for l, r in tests:
-        if eval("{} == {}".format(l, r)):
-            print("PASS: {} == {}".format(l, r))
-            passed += 1
-        else:
-            print("FAIL: {} == {}".format(l, r))
-    return passed
-
-def test_neq(tests):
-    passed = 0
-    for l, r in tests:
-        if eval("{} != {}".format(l, r)):
-            print("PASS: {} != {}".format(l, r))
-            passed += 1
-        else:
-            print("FAIL: {} != {}".format(l, r))
-    return passed
+import pytest
 
 # DateT tests
-def test_DateT():
-    passed = 0
-    total = 0
+def test_DateT_init():
+    with pytest.raises(ValueError):
+        DateT(-1, 1, 2000)
+        DateT(0, 1, 2000)
+        DateT(100, 1, 2000)
+        DateT(10, -1, 2000)
+        DateT(10, 0, 2000)
+        DateT(-1, 13, 2000)
+        DateT(1, 1, 10000)
+        DateT(1, 1, 0)
 
-    print("\n----- invalid __init__() params tests -----")
-    value_err_tests = [
-        "DateT(-1, 1, 2000)",
-        "DateT(0, 1, 2000)",
-        "DateT(100, 1, 2000)",
-        "DateT(10, -1, 2000)",
-        "DateT(10, 0, 2000)",
-        "DateT(-1, 13, 2000)",
-        "DateT(1, 1, 10000)", # max year == 9999
-        "DateT(1, 1, 0)", # min year == 1
-    ]
-    total += len(value_err_tests)
-    passed += test_value_err(value_err_tests)
+def test_DateT_day():
+    assert DateT(23, 2, 2012).day() == 23
+    assert DateT(1, 2, 2012).day() == 1
 
-    print("\n----- day() tests -----")
-    eq_tests = [
-        ("DateT(23, 2, 2012).day()", "23"),
-        ("DateT(1, 2, 2012).day()", "1")
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+    assert DateT(31, 1, 2012).day() != 30
+    assert DateT(14, 2, 2012).day() != -14
 
-    neq_tests = [
-        ("DateT(31, 1, 2012).day()", "30"),
-        ("DateT(14, 2, 2012).day()", "-14")
-    ]
-    total += len(neq_tests)
-    passed += test_neq(neq_tests)
+def test_DateT_month():
+    assert DateT(23, 2, 2012).month() == 2
+    assert DateT(1, 12, 2012).month() == 12
 
-    print("\n----- month() tests -----")
-    eq_tests = [
-        ("DateT(23, 2, 2012).month()", "2"),
-        ("DateT(1, 12, 2012).month()", "12")
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+    assert DateT(31, 1, 2012).month() != 2
+    assert DateT(14, 2, 2012).month() != -2
 
-    neq_tests = [
-        ("DateT(31, 1, 2012).month()", "2"),
-        ("DateT(14, 2, 2012).month()", "-2")
-    ]
-    total += len(neq_tests)
-    passed += test_neq(neq_tests)
+def test_DateT_year():
+    assert DateT(23, 2, 200).year() == 200
+    assert DateT(1, 12, 2031).year() == 2031
+    assert DateT(1, 12, 10).year() == 10
 
-    print("\n----- year() tests -----")
-    eq_tests = [
-        ("DateT(23, 2, 200).year()", "200"),
-        ("DateT(1, 12, 2031).year()", "2031"),
-        ("DateT(1, 12, 10).year()", "10")
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+    assert DateT(31, 1, 2012).year() != -2012
+    assert DateT(14, 2, 2012).year() != 0
+    assert DateT(14, 2, 2012).year() != 20120
 
-    neq_tests = [
-        ("DateT(31, 1, 2012).year()", "-2012"),
-        ("DateT(14, 2, 2012).year()", "0"),
-        ("DateT(14, 2, 2012).year()", "20120")
-    ]
-    total += len(neq_tests)
-    passed += test_neq(neq_tests)
+def test_DateT_next():
+    assert DateT(1, 2, 2012).next().equal(DateT(2, 2, 2012)) == True
+    assert DateT(28, 2, 2020).next().equal(DateT(29, 2, 2020)) == True # leap year
+    assert DateT(28, 2, 2021).next().equal(DateT(1, 3, 2021)) == True # non leap year
+    assert DateT(31, 12, 2021).next().equal(DateT(1, 1, 2022)) == True # month + year change
 
-    print("\n----- next() (and equal()) tests -----")
-    eq_tests = [
-        ("DateT(1, 2, 2012).next().equal(DateT(2, 2, 2012))", "True"),
-        ("DateT(28, 2, 2020).next().equal(DateT(29, 2, 2020))", "True"), # leap year
-        ("DateT(28, 2, 2021).next().equal(DateT(1, 3, 2021))", "True"), # non leap year
-        ("DateT(31, 12, 2021).next().equal(DateT(1, 1, 2022))", "True"), # month + year change
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_DateT_prev():
+    assert DateT(31, 12, 2021).prev().equal(DateT(30, 12, 2021)) == True
+    assert DateT(1, 3, 1600).prev().equal(DateT(29, 2, 1600)) == True # 400 divisible leap year
+    assert DateT(1, 3, 1700).prev().equal(DateT(28, 2, 1700)) == True # 100 divisible non leap year
+    assert DateT(1, 2, 2012).prev().equal(DateT(31, 1, 2012)) == True #  month change
 
-    print("\n----- prev() (and equal()) tests -----")
-    eq_tests = [
-        ("DateT(31, 12, 2021).prev().equal(DateT(30, 12, 2021))", "True"),
-        ("DateT(1, 3, 1600).prev().equal(DateT(29, 2, 1600))", "True"), # 400 divisible leap year
-        ("DateT(1, 3, 1700).prev().equal(DateT(28, 2, 1700))", "True"), # 100 divisible non leap year
-        ("DateT(1, 2, 2012).prev().equal(DateT(31, 1, 2012))", "True"), #  month change
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_DateT_before():
+    assert DateT(30, 12, 2021).before(DateT(31, 12, 2021)) == True # days before
+    assert DateT(1, 2, 1600).before(DateT(1, 3, 1600)) == True # months before
+    assert DateT(1, 3, 1).before(DateT(1, 3, 1700)) == True # years before
 
-    print("\n----- before() tests -----")
-    eq_tests = [
-        ("DateT(30, 12, 2021).before(DateT(31, 12, 2021))", "True"), # days before
-        ("DateT(1, 2, 1600).before(DateT(1, 3, 1600))", "True"), # months before
-        ("DateT(1, 3, 1).before(DateT(1, 3, 1700))", "True"), # years before
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_DateT_after():
+    assert DateT(13, 12, 2021).after(DateT(12, 12, 2021)) == True # days after
+    assert DateT(29, 3, 1600).after(DateT(29, 1, 1600)) == True # months after
+    assert DateT(1, 3, 1701).after(DateT(28, 2, 1700)) == True # years after
 
-    print("\n----- after() tests -----")
-    eq_tests = [
-        ("DateT(13, 12, 2021).after(DateT(12, 12, 2021))", "True"), # days after
-        ("DateT(29, 3, 1600).after(DateT(29, 1, 1600))", "True"), # months after
-        ("DateT(1, 3, 1701).after(DateT(28, 2, 1700))", "True"), # years after
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_DateT_add_days():
+    assert DateT(13, 12, 2021).add_days(12).equal(DateT(25, 12, 2021)) == True
+    assert DateT(29, 1, 1600).add_days(-100).equal(DateT(21, 10, 1599)) == True # month + year change
 
-    print("\n----- add_days() tests -----")
-    eq_tests = [
-        ("DateT(13, 12, 2021).add_days(12).equal(DateT(25, 12, 2021))", "True"),
-        ("DateT(29, 1, 1600).add_days(-100).equal(DateT(21, 10, 1599))", "True"), # month + year change
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_DateT_days_between():
+    assert DateT(10, 12, 2000).days_between(DateT(20, 12, 2000)) == 10 # between years
+    assert DateT(29, 3, 2014).days_between(DateT(29, 3, 2013)) == -365 # 365 (year) negative days between
 
-    print("\n----- days_between() tests -----")
-    eq_tests = [
-        ("DateT(10, 12, 2000).days_between(DateT(20, 12, 2000))", "10"), # between years
-        ("DateT(29, 3, 2014).days_between(DateT(29, 3, 2013))", "-365"), # 365 (year) negative days between
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
-
-    print()
-    print("### report ###")
-    print("{} of {} tests passed".format(passed, total))
 
 # GPosT tests
-def test_GPosT():
-    passed = 0
-    total = 0
+def test_GPosT_init():
+    with pytest.raises(ValueError):
+        GPosT(-90.0001, 0)
+        GPosT(90.0001, 0)
+        GPosT(0, -180.0001)
+        GPosT(0, 180.0001)
 
-    print("\n----- invalid __init__() params tests -----")
-    value_err_tests = [
-        "GPosT(-90.0001, 0)",
-        "GPosT(90.0001, 0)",
-        "GPosT(0, -180.0001)",
-        "GPosT(0, 180.0001)",
-    ]
-    total += len(value_err_tests)
-    passed += test_value_err(value_err_tests)
+    assert GPosT(-90., 0)
+    assert GPosT(90., 0)
+    assert GPosT(0, -180.)
+    assert GPosT(0, 180.)
 
-    no_err_tests = [
-        "GPosT(-90., 0)",
-        "GPosT(90., 0)",
-        "GPosT(0, -180.)",
-        "GPosT(0, 180.)",
-    ]
-    total += len(no_err_tests)
-    passed += test_no_err(no_err_tests)
+def test_GPosT_lat():
+    assert GPosT(23., 0).lat() == 23
+    assert GPosT(-12.1231, 1.).lat() == -12.1231
 
-    print("\n----- lat() tests -----")
-    eq_tests = [
-        ("GPosT(23., 0).lat()", "23"),
-        ("GPosT(-12.1231, 1.).lat()", "-12.1231")
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+    assert GPosT(23.000001, 23).lat() != 23
+    assert GPosT(23, -23).lat() != -23
 
-    neq_tests = [
-        ("GPosT(23.000001, 23).lat()", "23"),
-        ("GPosT(23, -23).lat()", "-23")
-    ]
-    total += len(neq_tests)
-    passed += test_neq(neq_tests)
+def test_GPosT_long():
+    assert GPosT(23., 0).long() == 0
+    assert GPosT(2.1231, 1.).long() == 1.
 
-    print("\n----- long() tests -----")
-    eq_tests = [
-        ("GPosT(23., 0).long()", "0"),
-        ("GPosT(2.1231, 1.).long()", "1.")
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+    assert GPosT(1.01, 1.01).long() != 1.
+    assert GPosT(23, -23).long() != 23
 
-    neq_tests = [
-        ("GPosT(1.01, 1.01).long()", "1."),
-        ("GPosT(23, -23).long()", "23")
-    ]
-    total += len(neq_tests)
-    passed += test_neq(neq_tests)
+def test_GPosT_west_of():
+    assert GPosT(1, 0).west_of(GPosT(2, 1)) == True
+    assert GPosT(28, -2).west_of(GPosT(21, -20)) == False
 
-    print("\n----- west_of() tests -----")
-    eq_tests = [
-        ("GPosT(1, 0).west_of(GPosT(2, 1))", "True"),
-        ("GPosT(28, -2).west_of(GPosT(21, -20))", "False"),
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_GPosT_north_of():
+    assert GPosT(31, 12).north_of(GPosT(30, 14)) == True
+    assert GPosT(-21, 3).north_of(GPosT(-20, 2)) == False
 
-    print("\n----- north_of() tests -----")
-    eq_tests = [
-        ("GPosT(31, 12).north_of(GPosT(30, 14))", "True"),
-        ("GPosT(-21, 3).north_of(GPosT(-20, 2))", "False"),
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_GPosT_distance():
+    assert (abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1) == True
+    assert (abs(1 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1) == False
 
-    print("\n----- distance() tests (accurate to 1km) -----")
-    eq_tests = [
-        ("abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1", True),
-        ("abs(1 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1", "False"),
-    ]
-    total += len(eq_tests)
-    passed += test_eq(eq_tests)
+def test_GPosT_equal():
+    assert GPosT(-1, 2).equal(GPosT(-1, 2)) == True
+    assert GPosT(-1.001, 2).equal(GPosT(-1, 2.001)) == True
+    assert GPosT(-1.2, 2).equal(GPosT(0, 0)) == False
+    assert GPosT(-20, 20).equal(GPosT(20, -20)) == False
 
-    # print("\n----- equal() (and distance()) tests -----")
-    # eq_tests = []
-    # total += len(eq_tests)
-    # passed += test_eq(eq_tests)
+def test_GPosT_move():
+    pass
 
-    # print("\n----- move() tests -----")
-    # need special test cases
-
-    # print("\n----- arrival_date() tests -----")
-    # eq_tests = []
-    # total += len(eq_tests)
-    # passed += test_eq(eq_tests)
-
-    print()
-    print("### report ###")
-    print("{} of {} tests passed".format(passed, total))
-
-# main function call
-if __name__ == "__main__":
-    print("########## DateT Tests ##########")
-    test_DateT()
-
-    print("\n"*5)
-
-    print("########## GPosT Tests ##########")
-    test_GPosT()
+def test_GPosT_arrival_date():
+    pass

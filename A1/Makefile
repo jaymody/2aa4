@@ -1,18 +1,18 @@
 PY = python
-PYFLAGS = 
-PYTEST = $(PY) #replace with pytest if written with pytest
+PYFLAGS = -v
+PYTEST = pytest #replace with pytest if written with pytest
 DOC = doxygen
-DOCFLAGS = 
+DOCFLAGS =
 DOCCONFIG = docConfig
 
 SRC = src/test_driver.py
 
 .PHONY: all test doc clean
 
-test: 
+test:
 	$(PYTEST) $(PYFLAGS) $(SRC)
 
-doc: 
+doc:
 	$(DOC) $(DOCFLAGS) $(DOCCONFIG)
 	cd latex && $(MAKE)
 

@@ -61,10 +61,10 @@ class GPosT:
         b = radians(b)
 
         angular_dist = d / self.__R
-        target_lat = asin(sin(self.__lat) * cos(angular_dist) + cos(self.__lat) * sin(angular_dist) * sin(b))
+        target_lat = asin(sin(self.__lat) * cos(angular_dist) + cos(self.__lat) * sin(angular_dist) * cos(b))
 
         y = sin(b) * sin(angular_dist) * cos(self.__lat)
-        x = cos(angular_dist) - sin(self.__lat) * target_lat
+        x = cos(angular_dist) - sin(self.__lat) * sin(target_lat)
         target_long = self.__long + atan2(y, x)
 
         self.__lat = target_lat
@@ -89,4 +89,4 @@ class GPosT:
     def arrival_date(self, p, d, s):
         distance = self.distance(p)
         days = distance / s
-        return d.add_days(days=days)
+        return d.add_days(n=days)

@@ -43,6 +43,13 @@ def test_DateT_year():
     assert DateT(14, 2, 2012).year() != 0
     assert DateT(14, 2, 2012).year() != 20120
 
+def test_DateT_equal():
+    assert DateT(31, 12, 2021).equal(DateT(31, 12, 2021))
+    assert DateT(1, 1, 1).equal(DateT(1, 1, 1))
+
+    assert not DateT(1, 1, 1).equal(DateT(2, 1, 1))
+    assert not DateT(31, 12, 2021).equal(DateT(30, 12, 2020))
+
 def test_DateT_next():
     assert DateT(1, 2, 2012).next().equal(DateT(2, 2, 2012)) == True
     assert DateT(28, 2, 2020).next().equal(DateT(29, 2, 2020)) == True # leap year
@@ -111,7 +118,7 @@ def test_GPosT_north_of():
 
 def test_GPosT_distance():
     assert (abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1) == True
-    assert (abs(1 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1) == False
+    assert (abs(212 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1) == False
 
 def test_GPosT_equal():
     assert GPosT(-1, 2).equal(GPosT(-1, 2)) == True
@@ -119,8 +126,18 @@ def test_GPosT_equal():
     assert GPosT(-1.2, 2).equal(GPosT(0, 0)) == False
     assert GPosT(-20, 20).equal(GPosT(20, -20)) == False
 
+## @cite used https://www.latlong.net/degrees-minutes-seconds-to-decimal-degrees to calculate expected output
 def test_GPosT_move():
-    pass
+    pos = GPosT(10, 0)
+    pos.move(30, 1000)
+
+    # test if within 1m of target lat/long
+    assert abs(17.74805556 - pos.lat()) < 0.001
+    assert abs(4.70722222 - pos.long()) < 0.001
 
 def test_GPosT_arrival_date():
-    pass
+    start_date = DateT(1, 1, 2000)
+    start_pos = GPosT(0, 0)
+    target_pos = GPosT(25, 25)
+
+    assert start_pos.arrival_date(target_pos, start_date, 100).equal(DateT(8, 2, 2000))

@@ -116,6 +116,7 @@ def test_GPosT_north_of():
     assert GPosT(31, 12).north_of(GPosT(30, 14))
     assert not GPosT(-21, 3).north_of(GPosT(-20, 2))
 
+## @cite used https://www.movable-type.co.uk/scripts/latlong.html to find expected distance outputs
 def test_GPosT_distance():
     assert (abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1)
     assert not (abs(212 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1)

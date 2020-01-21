@@ -51,30 +51,30 @@ def test_DateT_equal():
     assert not DateT(31, 12, 2021).equal(DateT(30, 12, 2020))
 
 def test_DateT_next():
-    assert DateT(1, 2, 2012).next().equal(DateT(2, 2, 2012)) == True
-    assert DateT(28, 2, 2020).next().equal(DateT(29, 2, 2020)) == True # leap year
-    assert DateT(28, 2, 2021).next().equal(DateT(1, 3, 2021)) == True # non leap year
-    assert DateT(31, 12, 2021).next().equal(DateT(1, 1, 2022)) == True # month + year change
+    assert DateT(1, 2, 2012).next().equal(DateT(2, 2, 2012))
+    assert DateT(28, 2, 2020).next().equal(DateT(29, 2, 2020)) # leap year
+    assert DateT(28, 2, 2021).next().equal(DateT(1, 3, 2021)) # non leap year
+    assert DateT(31, 12, 2021).next().equal(DateT(1, 1, 2022)) # month + year change
 
 def test_DateT_prev():
-    assert DateT(31, 12, 2021).prev().equal(DateT(30, 12, 2021)) == True
-    assert DateT(1, 3, 1600).prev().equal(DateT(29, 2, 1600)) == True # 400 divisible leap year
-    assert DateT(1, 3, 1700).prev().equal(DateT(28, 2, 1700)) == True # 100 divisible non leap year
-    assert DateT(1, 2, 2012).prev().equal(DateT(31, 1, 2012)) == True #  month change
+    assert DateT(31, 12, 2021).prev().equal(DateT(30, 12, 2021))
+    assert DateT(1, 3, 1600).prev().equal(DateT(29, 2, 1600)) # 400 divisible leap year
+    assert DateT(1, 3, 1700).prev().equal(DateT(28, 2, 1700)) # 100 divisible non leap year
+    assert DateT(1, 2, 2012).prev().equal(DateT(31, 1, 2012)) #  month change
 
 def test_DateT_before():
-    assert DateT(30, 12, 2021).before(DateT(31, 12, 2021)) == True # days before
-    assert DateT(1, 2, 1600).before(DateT(1, 3, 1600)) == True # months before
-    assert DateT(1, 3, 1).before(DateT(1, 3, 1700)) == True # years before
+    assert DateT(30, 12, 2021).before(DateT(31, 12, 2021)) # days before
+    assert DateT(1, 2, 1600).before(DateT(1, 3, 1600)) # months before
+    assert DateT(1, 3, 1).before(DateT(1, 3, 1700)) # years before
 
 def test_DateT_after():
-    assert DateT(13, 12, 2021).after(DateT(12, 12, 2021)) == True # days after
-    assert DateT(29, 3, 1600).after(DateT(29, 1, 1600)) == True # months after
-    assert DateT(1, 3, 1701).after(DateT(28, 2, 1700)) == True # years after
+    assert DateT(13, 12, 2021).after(DateT(12, 12, 2021)) # days after
+    assert DateT(29, 3, 1600).after(DateT(29, 1, 1600)) # months after
+    assert DateT(1, 3, 1701).after(DateT(28, 2, 1700)) # years after
 
 def test_DateT_add_days():
-    assert DateT(13, 12, 2021).add_days(12).equal(DateT(25, 12, 2021)) == True
-    assert DateT(29, 1, 1600).add_days(-100).equal(DateT(21, 10, 1599)) == True # month + year change
+    assert DateT(13, 12, 2021).add_days(12).equal(DateT(25, 12, 2021))
+    assert DateT(29, 1, 1600).add_days(-100).equal(DateT(21, 10, 1599)) # month + year change
 
 def test_DateT_days_between():
     assert DateT(10, 12, 2000).days_between(DateT(20, 12, 2000)) == 10 # between years
@@ -109,22 +109,22 @@ def test_GPosT_long():
     assert GPosT(23, -23).long() != 23
 
 def test_GPosT_west_of():
-    assert GPosT(1, 0).west_of(GPosT(2, 1)) == True
-    assert GPosT(28, -2).west_of(GPosT(21, -20)) == False
+    assert GPosT(1, 0).west_of(GPosT(2, 1))
+    assert not GPosT(28, -2).west_of(GPosT(21, -20))
 
 def test_GPosT_north_of():
-    assert GPosT(31, 12).north_of(GPosT(30, 14)) == True
-    assert GPosT(-21, 3).north_of(GPosT(-20, 2)) == False
+    assert GPosT(31, 12).north_of(GPosT(30, 14))
+    assert not GPosT(-21, 3).north_of(GPosT(-20, 2))
 
 def test_GPosT_distance():
-    assert (abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1) == True
-    assert (abs(212 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1) == False
+    assert (abs(1805.5 - GPosT(-1, 2).distance(GPosT(10, -10))) < 1)
+    assert not (abs(212 - GPosT(-11, 2).distance(GPosT(10, -10))) < 1)
 
 def test_GPosT_equal():
-    assert GPosT(-1, 2).equal(GPosT(-1, 2)) == True
-    assert GPosT(-1.001, 2).equal(GPosT(-1, 2.001)) == True
-    assert GPosT(-1.2, 2).equal(GPosT(0, 0)) == False
-    assert GPosT(-20, 20).equal(GPosT(20, -20)) == False
+    assert GPosT(-1, 2).equal(GPosT(-1, 2))
+    assert GPosT(-1.001, 2).equal(GPosT(-1, 2.001))
+    assert not GPosT(-1.2, 2).equal(GPosT(0, 0))
+    assert not GPosT(-20, 20).equal(GPosT(20, -20))
 
 ## @cite used https://www.latlong.net/degrees-minutes-seconds-to-decimal-degrees to calculate expected output
 def test_GPosT_move():

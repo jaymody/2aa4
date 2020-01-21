@@ -12,12 +12,19 @@ import pytest
 def test_DateT_init():
     with pytest.raises(ValueError):
         DateT(-1, 1, 2000)
+    with pytest.raises(ValueError):
         DateT(0, 1, 2000)
+    with pytest.raises(ValueError):
         DateT(100, 1, 2000)
+    with pytest.raises(ValueError):
         DateT(10, -1, 2000)
+    with pytest.raises(ValueError):
         DateT(10, 0, 2000)
+    with pytest.raises(ValueError):
         DateT(-1, 13, 2000)
+    with pytest.raises(ValueError):
         DateT(1, 1, 10000)
+    with pytest.raises(ValueError):
         DateT(1, 1, 0)
 
 def test_DateT_day():
@@ -85,8 +92,11 @@ def test_DateT_days_between():
 def test_GPosT_init():
     with pytest.raises(ValueError):
         GPosT(-90.0001, 0)
+    with pytest.raises(ValueError):
         GPosT(90.0001, 0)
+    with pytest.raises(ValueError):
         GPosT(0, -180.0001)
+    with pytest.raises(ValueError):
         GPosT(0, 180.0001)
 
     assert GPosT(-90., 0)

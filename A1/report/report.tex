@@ -1,9 +1,18 @@
+% !TeX root = ./report.tex
 \documentclass[12pt]{article}
 
 \usepackage{graphicx}
 \usepackage{paralist}
 \usepackage{listings}
 \usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
 
 \oddsidemargin 0mm
 \evensidemargin 0mm
@@ -16,19 +25,98 @@
 \newcounter{stepnum}
 
 \title{Assignment 1 Solution}
-\author{?}
+\author{Jay Mody}
 \date{\today}
 
 \begin {document}
 
 \maketitle
 
-Intro blurb.
+This report outlines the results of implementing and testing two modules in python: DateT, an ADT that represents date, and GPosT, and ADT that represents position. These modules are implemented using a given design specification. This report will also discuss critiques of the given design specifications, and answer questions about software practice and engineering as a discipline in general.
 
 \section{Testing of the Original Program}
+\subsection{Assumptions}
+\subsubsection{DateT ADT}
+I based my assumptions for the DateT ADT off of the python datetime module implementation (taken from \url{docs.python.org}), namely:
+\begin{quotation}
+  "An idealized naive date, assuming the current Gregorian calendar always was, and always will be, in effect. "
+\end{quotation}
+This includes:
+\begin{itemize}
+  \item The calendar has three main attributes, a year, month, and day.
+  \item The first year is 1, and the last year is 9999.
+  \item A year contains 12 months, with each month containing the following number of days (in order):
+  \begin{itemize}
+      \item January (31 days)
+      \item February (28 days, 29 on a leap year)
+      \item March (31 days)
+      \item April (30 days)
+      \item May (31 days)
+      \item June (30 days)
+      \item July (31 days)
+      \item August (31 days)
+      \item September (30 days)
+      \item October (31 days)
+      \item November (30 days)
+      \item December (31 days)
+  \end{itemize}
+  \item As a result of the above, a year contains 365 days, except on leap years, where there is an additional day in February, making a leap year contain 366 days.
+  \item Leap years happen every 4 years, starting from year 4. Leap years do not occur on years that are a multiple of 100, unless they are also a multiple of 400 (ie 300 is not a leap year but 800 is).
+\end{itemize}
 
-Description of approach to testing.  Rationale for test case selection.  Summary
-of results.  Any problems uncovered through testing.
+\subsubsection{GPosT ADT}
+I based my assumptions for the GPosT ADT off of the website \url{https://www.movable-type.co.uk/scripts/latlong.html}. Namely:
+\begin{itemize}
+  \item The longitude and latitude are represented as signed decimal degrees, where longitude (represented by the symbol $\lambda$) must be on the range [-180, 180], and latitude (represented by the symbol $\phi$) must be on the range [-90, 90].
+  \item The distance and move functions are modeled by the equations provided by the website (with the distance function specifically using the Haversine formula).
+  \item Speed and distance are measured in terms of km and hours, and may be negative (indicates opposite direction) with no restriction on the input range.
+  \item Bearing also has no restriction on the input range, and is represented as a signed decimal degree.
+\end{itemize} 
+
+\subsection{Approach}
+My test approach involved creating 2-4 test cases for each function. I tried to include the following types of test cases for each function:
+\begin{itemize}
+  \item A trivial "normal" test case
+  \item A trivial edge case (-1, 0, max limit, boundary testing, month changes, etc ...)
+  \item A non-trivial edge case (leap year)
+\end{itemize}
+
+Additionally, for the constructors, I tested a range of both valid and invalid inputs to make sure the correct errors were being raised for invalid inputs, and aren't being raised for valid ones.
+
+\subsection{Results}
+Below I put the log of the pytest results after running the test driver on my code (spoiler alert, I passed them all):
+
+\begin{lstlisting}
+  =========================================================================================== test session starts ============================================================================================
+  platform darwin -- Python 3.7.5, pytest-5.3.4, py-1.8.1, pluggy-0.13.1 -- /Users/jay/.pyenv/versions/3.7.5/envs/base/bin/python
+  cachedir: .pytest_cache
+  rootdir: /Users/jay/code/edu/2aa4/A1
+  plugins: dash-1.7.0
+  collected 20 items
+  
+  src/test_driver.py::test_DateT_init PASSED
+  src/test_driver.py::test_DateT_day PASSED
+  src/test_driver.py::test_DateT_month PASSED
+  src/test_driver.py::test_DateT_year PASSED
+  src/test_driver.py::test_DateT_equal PASSED
+  src/test_driver.py::test_DateT_next PASSED
+  src/test_driver.py::test_DateT_prev PASSED
+  src/test_driver.py::test_DateT_before PASSED
+  src/test_driver.py::test_DateT_after PASSED
+  src/test_driver.py::test_DateT_add_days PASSED
+  src/test_driver.py::test_DateT_days_between PASSED
+  src/test_driver.py::test_GPosT_init PASSED
+  src/test_driver.py::test_GPosT_lat PASSED
+  src/test_driver.py::test_GPosT_long PASSED
+  src/test_driver.py::test_GPosT_west_of PASSED
+  src/test_driver.py::test_GPosT_north_of PASSED
+  src/test_driver.py::test_GPosT_distance PASSED
+  src/test_driver.py::test_GPosT_equal PASSED
+  src/test_driver.py::test_GPosT_move PASSED
+  src/test_driver.py::test_GPosT_arrival_date PASSED
+  
+  ============================================================================================ 20 passed in 0.09s ============================================================================================
+\end{lstlisting}
 
 \section{Results of Testing Partner's Code}
 

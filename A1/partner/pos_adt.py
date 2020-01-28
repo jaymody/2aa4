@@ -106,7 +106,7 @@ class GPosT:
         """
         Destination Using Bearing and Distance:
         lat2 = asin(sin lat1 * cos d + cos lat1 * sin d * cos b)
-        long2 = λ1 + atan2(sin b * sin d * cos lat1, cos d − sin lat1 * sin lat2)
+        long2 = long1 + atan2(sin b * sin d * cos lat1, cos d - sin lat1 * sin lat2)
 
         Cited from: https://www.movable-type.co.uk/scripts/latlong.html
         """

@@ -41,7 +41,7 @@ I based my assumptions for the DateT ADT off of the python datetime module imple
 \begin{quotation}
   "An idealized naive date, assuming the current Gregorian calendar always was, and always will be, in effect. "
 \end{quotation}
-This includes:
+Here's a summary of what this includes:
 \begin{itemize}
   \item The calendar has three main attributes, a year, month, and day.
   \item The first year is 1, and the last year is 9999.
@@ -64,14 +64,25 @@ This includes:
   \item Leap years happen every 4 years, starting from year 4. Leap years do not occur on years that are a multiple of 100, unless they are also a multiple of 400 (ie 300 is not a leap year but 800 is).
 \end{itemize}
 
+In addition, I also had to make a couple assumptions about a couple of the functions:
+\begin{itemize}
+  \item The add days function allows negative inputs, which would represent travelling back in time from the current date.
+  \item The return value of the days between method may be negative, which would indicate that the inputed date comes $|n|$ days before the current one.
+\end{itemize}
+
 \subsubsection{GPosT ADT}
 I based my assumptions for the GPosT ADT off of the website \url{https://www.movable-type.co.uk/scripts/latlong.html}. Namely:
 \begin{itemize}
   \item The longitude and latitude are represented as signed decimal degrees, where longitude (represented by the symbol $\lambda$) must be on the range [-180, 180], and latitude (represented by the symbol $\phi$) must be on the range [-90, 90].
   \item The distance and move functions are modeled by the equations provided by the website (with the distance function specifically using the Haversine formula).
-  \item Speed and distance are measured in terms of km and hours, and may be negative (indicates opposite direction) with no restriction on the input range.
-  \item Bearing also has no restriction on the input range, and is represented as a signed decimal degree.
 \end{itemize} 
+
+In addition to these basic assumptions, I also had to make a couple of assumptions about a couple of the functions:
+\begin{itemize}
+  \item Speed and distance (for the arrival date and move function) are measured in terms of km and hours, and may be negative (indicates opposite direction) with no restriction on the input range.
+  \item The bearing paramter in the move function has no restriction on the input range, and is represented as a signed decimal degree (ie 360 is equivalent to 720 which is equivalent to 0).
+  \item For the arrival date function, the start time is assumed to be 12:00 AM, meaning if a decimal number of days pass, the decimal is dropped. It also does not take into account time zones.
+\end{itemize}
 
 \subsection{Approach}
 My test approach involved creating 2-4 test cases for each function. I tried to include the following types of test cases for each function:
@@ -87,13 +98,6 @@ Additionally, for the constructors, I tested a range of both valid and invalid i
 Below I put the log of the pytest results after running the test driver on my code (spoiler alert, I passed them all):
 
 \begin{lstlisting}
-  =========================================================================================== test session starts ============================================================================================
-  platform darwin -- Python 3.7.5, pytest-5.3.4, py-1.8.1, pluggy-0.13.1 -- /Users/jay/.pyenv/versions/3.7.5/envs/base/bin/python
-  cachedir: .pytest_cache
-  rootdir: /Users/jay/code/edu/2aa4/A1
-  plugins: dash-1.7.0
-  collected 20 items
-  
   src/test_driver.py::test_DateT_init PASSED
   src/test_driver.py::test_DateT_day PASSED
   src/test_driver.py::test_DateT_month PASSED
@@ -114,18 +118,98 @@ Below I put the log of the pytest results after running the test driver on my co
   src/test_driver.py::test_GPosT_equal PASSED
   src/test_driver.py::test_GPosT_move PASSED
   src/test_driver.py::test_GPosT_arrival_date PASSED
-  
-  ============================================================================================ 20 passed in 0.09s ============================================================================================
+  20 of 20 tests passed
 \end{lstlisting}
 
 \section{Results of Testing Partner's Code}
 
-Consequences of running partner's code.  Success, or lack of success, running
-test cases.  Explanation of why it worked, or didn't.
+Here's the summary of the pytest results after running my partners code on the test driver:
+
+\begin{lstlisting}
+  src/test_driver.py::test_DateT_init PASSED
+  src/test_driver.py::test_DateT_day PASSED
+  src/test_driver.py::test_DateT_month PASSED
+  src/test_driver.py::test_DateT_year PASSED
+  src/test_driver.py::test_DateT_equal PASSED
+  src/test_driver.py::test_DateT_next PASSED
+  src/test_driver.py::test_DateT_prev PASSED
+  src/test_driver.py::test_DateT_before PASSED
+  src/test_driver.py::test_DateT_after PASSED
+  src/test_driver.py::test_DateT_add_days FAILED
+  src/test_driver.py::test_DateT_days_between FAILED
+  src/test_driver.py::test_GPosT_init PASSED
+  src/test_driver.py::test_GPosT_lat PASSED
+  src/test_driver.py::test_GPosT_long PASSED
+  src/test_driver.py::test_GPosT_west_of PASSED
+  src/test_driver.py::test_GPosT_north_of PASSED
+  src/test_driver.py::test_GPosT_distance PASSED
+  src/test_driver.py::test_GPosT_equal PASSED
+  src/test_driver.py::test_GPosT_move PASSED
+  src/test_driver.py::test_GPosT_arrival_date FAILED
+  17 of 20 tests passed 
+\end{lstlisting}
+
+3 of the 20 function tests failed, below are pytest log for the failure and an explanation for the error.
+
+\subsection{add days}
+
+\begin{lstlisting}
+  def test_DateT_add_days():
+     assert DateT(13, 12, 2021).add_days(12).equal(DateT(25, 12, 2021))
+>    assert DateT(29, 1, 1600).add_days(-100).equal(DateT(21, 10, 1599)) # month + year change
+
+  self = <date_adt.DateT object at 0x1084cc210>, n = -100
+
+  def add_days(self, n):
+    if n < 0:
+>     raise ValueError("ERROR: Days to add cannot be a negative number")
+E     ValueError: ERROR: Days to add cannot be a negative number
+\end{lstlisting}
+
+For this function, we made two different assumptions. I assumed a negative number of days to add were allowed (which would indicate moving backwards in time), while my partner assumed that negative days were not allowed, and to raise a ValueError if a negative number was passed to the function.
+\\
+
+\subsection{days between}
+
+\begin{lstlisting}
+  def test_DateT_days_between():
+    assert DateT(10, 12, 2000).days_between(DateT(20, 12, 2000)) == 10 # between years
+>   assert DateT(29, 3, 2014).days_between(DateT(29, 3, 2013)) == -365 # 365 (year) negative days between
+E   assert 365 == -365
+E     -365
+E     +-365
+\end{lstlisting}
+
+Once again, we made two different assumptions. I asssumed that if the inputed date d came before the date of the object, the days between would be negative. In contrast, my partner assumed that days between is always positive, and took the absolute value of the difference.
+\\
+
+\subsection{arrival date}
+
+\begin{lstlisting}
+  def test_GPosT_arrival_date():
+      start_date = DateT(1, 1, 2000)
+      start_pos = GPosT(0, 0)
+      target_pos = GPosT(25, 25)
+
+>     assert start_pos.arrival_date(target_pos, start_date, 100).equal(DateT(8, 2, 2000))
+E     assert False
+E     +  where False = <bound method DateT.equal of <date_adt.DateT object at 0x10853df90>>(<date_adt.DateT object at 0x10853dfd0>)
+E     +    where <bound method DateT.equal of <date_adt.DateT object at 0x10853df90>> = <date_adt.DateT object at 0x10853df90>.equal
+E     +      where <date_adt.DateT object at 0x10853df90> = <bound method GPosT.arrival_date of <pos_adt.GPosT object at 0x10853dc90>>(<pos_adt.GPosT object at 0x10853dc50>, <date_adt.DateT object at 0x10853dd10>, 100)
+E     +        where <bound method GPosT.arrival_date of <pos_adt.GPosT object at 0x10853dc90>> = <pos_adt.GPosT object at 0x10853dc90>.arrival_date
+E     +          and <date_adt.DateT object at 0x10853dfd0> = DateT(8, 2, 2000)
+\end{lstlisting}
+
+For this test, I assumed that if the computed number of days it would take to get from point A to point B was a decimal number, to simply ignore the decimal. My rational for this was that if you left at 12:00 AM, and it took you 0.99 days to get to your destination, the date has still yet to change. In contrast, my partner decided that if the computed number of days was a decimal number, to take the ceiling of that number via math.ciel, which is why the test failed (his arrival date was one ahead of mine). We both ignored time zones.
+\\
 
 \section{Critique of Given Design Specification}
 
-Advantages and disadvantages of the given design specification.
+The design specification was not very complete, leaving a lot of room for assumptions and ambiguity. This is evident with the differences in the test results between me and my partners code. Of the 3 failed tests, all of them were a result of different assumptions and not incorrect implementations. 
+
+One element I did like about the design specification is that the implementation details were not specified (like what state variables to use), which gave us flexibility in how we may approac the problem. It also puts the focus on the module interface rather than biasing how we should implement the interface.
+\\
+
 
 \section{Answers to Questions}
 

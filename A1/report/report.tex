@@ -64,7 +64,7 @@ Here's a summary of what this includes:
   \item Leap years happen every 4 years, starting from year 4. Leap years do not occur on years that are a multiple of 100, unless they are also a multiple of 400 (ie 300 is not a leap year but 800 is).
 \end{itemize}
 
-In addition, I also had to make a couple assumptions about a couple of the functions:
+In addition, I also had to make a couple assumptions about the module functions:
 \begin{itemize}
   \item The add days function allows negative inputs, which would represent travelling back in time from the current date.
   \item The return value of the days between method may be negative, which would indicate that the inputed date comes $|n|$ days before the current one.
@@ -77,10 +77,10 @@ I based my assumptions for the GPosT ADT off of the website \url{https://www.mov
   \item The distance and move functions are modeled by the equations provided by the website (with the distance function specifically using the Haversine formula).
 \end{itemize} 
 
-In addition to these basic assumptions, I also had to make a couple of assumptions about a couple of the functions:
+In addition, I also had to make a couple of assumptions about the module functions:
 \begin{itemize}
-  \item Speed and distance (for the arrival date and move function) are measured in terms of km and hours, and may be negative (indicates opposite direction) with no restriction on the input range.
-  \item The bearing paramter in the move function has no restriction on the input range, and is represented as a signed decimal degree (ie 360 is equivalent to 720 which is equivalent to 0).
+  \item Speed and distance (for the arrival date and move function) are measured in terms of km and hours, and may be negative (indicating opposite direction) with no restriction on the input range.
+  \item The bearing paramter in the move function has no restriction on the input range, and is represented as a signed decimal degree (ie 360 is equivalent to -720 which is equivalent to 0).
   \item For the arrival date function, the start time is assumed to be 12:00 AM, meaning if a decimal number of days pass, the decimal is dropped. It also does not take into account time zones.
 \end{itemize}
 
@@ -95,7 +95,7 @@ My test approach involved creating 2-4 test cases for each function. I tried to 
 Additionally, for the constructors, I tested a range of both valid and invalid inputs to make sure the correct errors were being raised for invalid inputs, and aren't being raised for valid ones.
 
 \subsection{Results}
-Below I put the log of the pytest results after running the test driver on my code (spoiler alert, I passed them all):
+Most of the errors in the DateT module were simple things like wrong return types and mispelled variable names. However, for GPosT, it took me a while to understand that my calculations weren't working because I had forgotten to convert my units to radians. After the fixes however, everything ran smoothly. Here's a summary of the pytest log for the test driver run on my code:
 
 \begin{lstlisting}
   src/test_driver.py::test_DateT_init PASSED
@@ -149,7 +149,7 @@ Here's the summary of the pytest results after running my partners code on the t
   17 of 20 tests passed 
 \end{lstlisting}
 
-3 of the 20 function tests failed, below are pytest log for the failure and an explanation for the error.
+3 of the 20 function tests failed, below I detail each failure and provide and explanation as to why the unit test failed.
 
 \subsection{add days}
 
@@ -166,7 +166,7 @@ Here's the summary of the pytest results after running my partners code on the t
 E     ValueError: ERROR: Days to add cannot be a negative number
 \end{lstlisting}
 
-For this function, we made two different assumptions. I assumed a negative number of days to add were allowed (which would indicate moving backwards in time), while my partner assumed that negative days were not allowed, and to raise a ValueError if a negative number was passed to the function.
+For this function, we made two different assumptions. I assumed that negative numbers for days was allowed in the input (which would indicate moving backwards in time), while my partner assumed that negative days were not allowed. Instead he simply returns a ValueError.
 \\
 
 \subsection{days between}
@@ -180,7 +180,7 @@ E     -365
 E     +-365
 \end{lstlisting}
 
-Once again, we made two different assumptions. I asssumed that if the inputed date d came before the date of the object, the days between would be negative. In contrast, my partner assumed that days between is always positive, and took the absolute value of the difference.
+Once again, we made two different assumptions. I asssumed that if the inputed date $d$ came before the object's date, the days between would be negative. In contrast, my partner assumed that days between is always positive, and took the absolute value of the difference.
 \\
 
 \subsection{arrival date}
@@ -200,22 +200,45 @@ E     +        where <bound method GPosT.arrival_date of <pos_adt.GPosT object a
 E     +          and <date_adt.DateT object at 0x10853dfd0> = DateT(8, 2, 2000)
 \end{lstlisting}
 
-For this test, I assumed that if the computed number of days it would take to get from point A to point B was a decimal number, to simply ignore the decimal. My rational for this was that if you left at 12:00 AM, and it took you 0.99 days to get to your destination, the date has still yet to change. In contrast, my partner decided that if the computed number of days was a decimal number, to take the ceiling of that number via math.ciel, which is why the test failed (his arrival date was one ahead of mine). We both ignored time zones.
+For this test, I assumed that if the computed number of days it would take to get from point A to point B was a decimal number, to simply ignore the decimal. My rational for this was that if you left at 12:00 AM, and it took you 0.99 days to get to your destination, the date has still yet to change. In contrast, my partner decided that if the computed number of days was a decimal number, to take the ceiling of that number via math.ciel, which would make his function return a date that was almost always one day ahead of mine.
 \\
 
 \section{Critique of Given Design Specification}
 
-The design specification was not very complete, leaving a lot of room for assumptions and ambiguity. This is evident with the differences in the test results between me and my partners code. Of the 3 failed tests, all of them were a result of different assumptions and not incorrect implementations. 
+\subsection{Disadvantages}
+The design specification was not very complete, leaving a lot of room for assumptions and ambiguity. The first module DateT didn't even specify what type of calendar to use, which meant I could've used any calendar that had a notion of days, months and years and it would've been a valid implementation. Similarly, I had to make a lot of assumptions about what to do in certain situations when implementing certain functions. This is evident with the differences in the test results between me and my partners code. Of the 3 failed tests, all of them were a result of different assumptions and not incorrect implementations.
 
-One element I did like about the design specification is that the implementation details were not specified (like what state variables to use), which gave us flexibility in how we may approac the problem. It also puts the focus on the module interface rather than biasing how we should implement the interface.
+\subsection{Advantages}
+One element I did like about the design specification is that the implementation details were not specified (like what state variables to use), which gave us flexibility in how we could approach the problem. It also puts the focus on the module interface rather than biasing how we should implement said interface. 
+
+\subsection{Improvements}
+One simple improvements for the design would be to be more clear and specific. What type of calendar are we implementing? Are negative distances allowed? What is the range on this input value? These are all questions that should be answered by the design specification.
 \\
-
 
 \section{Answers to Questions}
 
 \begin{enumerate}[(a)]
 
-\item 
+\item For the DateT module, you could store the date using state variables for year, month, and day. This is the most trivial implementation as that's how the interface for the constructor is defined. However, you could also implement the DateT module using a single state variable for the number of days, as both month and year can be expressed in terms of days. In this version of the implementation, you would need some anchor date for which the number of days are expressed relative to this anchor date. For example, if the anchor date $days=1$ is Jan 1st, 2000, then Jan 1st, 1999 would have the state variable $days=-366$, and Jan 1st, 2001 would have the state variable $days=377$. \\ For the GPosT module, you could store the longitude and latitude in terms of radians or in terms of decimal degrees. Both have their advantages and disadvanteges. For example, storing it in terms of radians means you don't have to convert it everytime you want to perform a computation, but it also means you'll have to convert it to degrees anytime the user wants to access longitude or latitude. Alternatively, you could also use the DMS (degrees, minutes, seconds) representation for position.
+
+\item GPosT is mutable because the inner state variables are edited when you call the move function. In contrast, DateT is immutable because when you call prev, next, and add days, it returns a new DateT object rather than editing the current one. With the given interface, there would be no way to edit a DateT object's value after it's been initialized.
+
+\item Unit testing via pytest abstracted some of the boiler plate code I had to create when I wasn't using pytest (which you can see via my commit history). It also encourages you to organize your test cases into isolated functions. This was extremely helpful for me to visually understand how rigorously each function was being tested and where I needed to add more test cases/more elaborate test cases. Finally, since it provides a traceback of the values as an assertion is evaluated, you don't need to manually break down a test case with print statements, which saved me a ton of time.
+
+\item In 2015, twitter failed for a few hours due to a date/time issue in their code. They were using the Gregorian calendar for the day and month, but accidentally used the ISO 8601 week-based system for the year. Because of how each of these calendars work, the Gregorian and ISO years lined up perfectly until 2015, at which point there was a 2 day mismatch and twitter was recording the wrong date on their platform. Although the impact of this bug was minimal, you can imagine if a similar bug existed for say a record keeping system for digital evidence for criminal cases, that vital evidence could be considered void because the date of said evidence would be under dispute. Software quality and high cost is a major challenge because of the project management triangle. To summarize, it states that any software project cannot be cheap, high quality, and fast to develop at the same time. In a business oriented world, with deadlines and a drive to maximize profits and reduce costs, it's easy to see why cost and speed are prioritized over quality. Ideally, you would be given more time and financial resources to create and test a quality product. (Cite: \url{https://www.youtube.com/watch?v=D3jxx8Yyw1c})
+
+\item The ration design process is a waterall design process for software development with 7 steps: problem statement, development plan, requirements, design documentation, code, and verification. However this process is not realistic. Software development is almost always never this linear, as along the process you'll learn you may need to relook at the problem statement, or update the requirements as you're in the later stages of the process. As humans, we also make errors and have imperfect communication, which means we need to continually reevaluate each step of the process. Hence, we "fake" the design process. 
+
+\item Let's start by defining each term (Cite: \url{https://accu.org/index.php/journals/1585}).
+\begin{itemize}
+  \item Correctness: The ability of software products to perform their exact tasks, as defined by their specification.
+  \item Robustness: The ability of software systems to react appropriately to abnormal conditions.
+  \item Reliability: A concern encompassing correctness and robustness. The ability of a system to perform its requested functions under stated conditions whenever required - having a long mean time between failures.
+\end{itemize}
+To understand how these three are distinguished better, let's take the GPosT and DateT moduels as examples. Correctness would describe how the software's ability to return the correct output and behaviour that was specified. When I call the next method does the date change by one day? Does it work for edge cases, say when the month and year change? What about leap years? Robustness would be the ability of the software to work when invalid inputs are provided, or when errors occur. For example, although my implementation for arrive date was correct in GPosT, it was not robust, as I didn't stop the user from inputing 0 for the speed, causing a DivisionByZero error. Finally, reliability describes both of these terms in general (ie how often does the software do what it is intended to do).
+
+\item Modularity is the idea of seperating a software systems componenets into organized parts. This can be done for a variety of reasons. Readability, flexibility, maintenance, communication, collaboration, and for seperation of concerns. Seperation of concerns is a software design principle for seperating componenets into independent parts. To understand this better, let's take GPosT as an example. The arrival date function uses the distance function in it's implementation. This modularity allows us to seperate the problem of finding out the arrival date, and calculating distance. Here, we are free to edit the distance function (maybe using a different approximation formula) without breaking the code.
+
 
 \end{enumerate}
 

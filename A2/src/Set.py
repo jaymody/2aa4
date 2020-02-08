@@ -3,7 +3,9 @@
 #  @brief todo
 #  @date 08/02/20 (dd/mm/yy)
 
-class Set:
+from Equality import Equality
+
+class Set(Equality):
     def __init__(self, s):
         self.__set = set(s)
 
@@ -21,6 +23,9 @@ class Set:
 
     def size(self):
         return len(self.__set)
+
+    def equals(self, R):
+        return self.__set == R.__set and self.size() == R.size()
 
     def to_seq(self):
         return list(self.__set)

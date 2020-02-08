@@ -1,2 +1,4 @@
 ## @file ChemEntity.py
-#  @author 
+#  @author Jay Mody
+#  @brief todo
+#  @date 08/02/20 (dd/mm/yy)

@@ -4,20 +4,20 @@
 #  @date 08/02/20 (dd/mm/yy)
 
 class Set:
-    def __init__(self, sequence):
-        self.__set = set(sequence)
+    def __init__(self, s):
+        self.__set = set(s)
 
-    def add(self, element):
-        self.__set.add(element)
+    def add(self, e):
+        self.__set.add(e)
 
-    def rm(self, element):
+    def rm(self, e):
         try:
-            self.__set.remove(element)
+            self.__set.remove(e)
         except KeyError:
-            raise ValueError("Element {} is not in set.".format(element))
+            raise ValueError("Element {} is not in set.".format(e))
 
-    def member(self, element):
-        return element in self.__set
+    def member(self, e):
+        return e in self.__set
 
     def size(self):
         return len(self.__set)

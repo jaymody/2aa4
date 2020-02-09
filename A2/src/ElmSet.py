@@ -5,5 +5,5 @@
 
 from Set import Set
 
-class ElemSet(Set):
+class ElmSet(Set):
     pass

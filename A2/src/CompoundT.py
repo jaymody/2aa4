@@ -15,9 +15,9 @@ class CompoundT(ChemEntity, Equality):
         return self.__c
 
     def num_atoms(self, e):
-        return sum([m.num_atoms() for m in self.get_molec_set().to_seq()])
+        return sum([m.num_atoms(e) for m in self.get_molec_set().to_seq()])
 
-    def constit_elems(self, e):
+    def constit_elems(self):
         return ElmSet([m.get_elm() for m in self.get_molec_set().to_seq()])
 
     def equals(self, D):

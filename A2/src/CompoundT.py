@@ -6,9 +6,12 @@
 from ChemEntity import ChemEntity
 from Equality import Equality
 from ElmSet import ElmSet
+from MolecSet import MolecSet
 
 class CompoundT(ChemEntity, Equality):
     def __init__(self, m):
+        if not isinstance(m, MolecSet):
+            raise ValueError("m must be of type MolecSet")
         self.__c = m
 
     def get_molec_set(self):

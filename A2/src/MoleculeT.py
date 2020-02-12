@@ -22,7 +22,10 @@ class MoleculeT(ChemEntity, Equality):
         return self.__num if e == self.__elm else 0
 
     def constit_elems(self):
-        return ElmSet(self.__elm)
+        return ElmSet([self.__elm])
 
     def equals(self, m):
         return self.get_elm() == m.get_elm() and self.get_num() == m.get_num()
+
+    def __hash__(self):
+        return hash((self.__num, self.__elm))

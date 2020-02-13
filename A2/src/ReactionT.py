@@ -40,18 +40,23 @@ class ReactionT:
         rmat = -1 * mat[:,len(l):-1]
         x = np.hstack((lmat, rmat))
         y =  mat[:,-1]
-        soln = np.linalg.solve(x, y)
+        soln = np.linalg.lstsq(x, y)[0]
 
         # convert coefficients to whole numbers
         soln = np.append(soln, 1)
-        for i in range(1,100):
+        for i in range(1,1000):
             whole_soln = i*soln
-            if all(int(n) == n for n in whole_soln):
-                soln = whole_soln
+            if all(abs(round(n) - n) < 1e-8 for n in whole_soln):
+                soln = [int(n) for n in whole_soln]
                 break
 
         self.__lhs_coeff = list(soln[:len(l)])
         self.__rhs_coeff = list(soln[len(l):])
+
+        if not all(n > 0 for n in self.__lhs_coeff):
+            raise ValueError("Invalid solution (negative/zero coeffs) found.")
+        if not all(n > 0 for n in self.__rhs_coeff):
+            raise ValueError("Invalid solution (negative/zero coeffs) found.")
 
     ## @brief Gets the left hand side of the equation.
     #  @return m A list of CompoundT objects that represent the left hand side of the equation.

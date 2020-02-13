@@ -47,7 +47,7 @@ class ReactionT:
         for i in range(1,1000):
             whole_soln = i*soln
             if all(abs(round(n) - n) < 1e-8 for n in whole_soln):
-                soln = [int(n) for n in whole_soln]
+                soln = [round(n) for n in whole_soln]
                 break
 
         self.__lhs_coeff = list(soln[:len(l)])

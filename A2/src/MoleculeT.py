@@ -8,6 +8,8 @@ from ChemTypes import ElementT
 from Equality import Equality
 from ElmSet import ElmSet
 
+import copy
+
 ## @brief A module for single element molecules.
 #  @details A module for molecules that are only made up of a single type of element (e.g. O2, N2, C7).
 class MoleculeT(ChemEntity, Equality):
@@ -22,7 +24,7 @@ class MoleculeT(ChemEntity, Equality):
         if not isinstance(e, ElementT):
             raise ValueError("e must be of type ElementT")
         self.__num = n
-        self.__elm = e
+        self.__elm = copy.deepcopy(e)
 
     ## @brief Gets the number of atoms in the molecule.
     #  @returns An integer for the number of atoms in the molecule.

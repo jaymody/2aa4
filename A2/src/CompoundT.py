@@ -8,6 +8,8 @@ from Equality import Equality
 from ElmSet import ElmSet
 from MolecSet import MolecSet
 
+import copy
+
 ## @brief A module for chemical compounds.
 #  @details A module for chemical compounds, defined by a MolecSet.
 class CompoundT(ChemEntity, Equality):
@@ -18,7 +20,7 @@ class CompoundT(ChemEntity, Equality):
     def __init__(self, m):
         if not isinstance(m, MolecSet):
             raise ValueError("m must be of type MolecSet")
-        self.__c = m
+        self.__c = copy.deepcopy(m)
 
     ## @brief Gets the MolecSet of this compound.
     #  @return m The MolecSet object for this compound.

@@ -3,6 +3,7 @@
 #  @brief Provides module for chemical reactions.
 #  @date 08/02/20 (dd/mm/yy)
 
+import copy
 import math
 import collections
 import numpy as np
@@ -18,8 +19,8 @@ class ReactionT:
     #  @cite https://www.nyu.edu/classes/tuckerman/adv.chem/lectures/lecture_2/node3.html
     #  @cite https://stackabuse.com/solving-systems-of-linear-equations-with-pythons-numpy/
     def __init__(self, l, r):
-        self.__lhs = l
-        self.__rhs = r
+        self.__lhs = copy.deepcopy(l)
+        self.__rhs = copy.deepcopy(r)
 
         # find matrix of elements x compounds
         cols = len(l)+len(r)

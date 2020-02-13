@@ -191,3 +191,143 @@ def test_CompoundT_equals():
 
     s2.add(MoleculeT(42, ElementT.U))
     assert CompoundT(s1) != CompoundT(s2)
+
+
+# ReactionT tests
+## @cite https://www.nayuki.io/page/chemical-equation-balancer-javascript
+def test_ReactionT_init():
+    # HClFe -> NO, is an invalid chemical equation
+    m1 = MoleculeT(1, ElementT.H)
+    m2 = MoleculeT(1, ElementT.Cl)
+    m3 = MoleculeT(1, ElementT.Fe)
+    m4 = MoleculeT(1, ElementT.N)
+    m5 = MoleculeT(1, ElementT.O)
+    lhs = [CompoundT(MolecSet([m1, m2, m3]))]
+    rhs = [CompoundT(MolecSet([m4, m5]))]
+
+    with pytest.raises(Exception):
+        ReactionT(lhs, rhs)
+
+    # H2 + O2 -> H2O, is a valid chemical equation that can be balanced
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(2, ElementT.O)
+    m3 = MoleculeT(1, ElementT.O)
+    lhs = [
+        CompoundT(MolecSet([m1])),
+        CompoundT(MolecSet([m2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([m1, m3]))
+    ]
+
+    assert ReactionT(lhs, rhs)
+
+def test_ReactionT_get_lhs():
+    # H2 + O2 -> H2O
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(2, ElementT.O)
+    m3 = MoleculeT(1, ElementT.O)
+    lhs = [
+        CompoundT(MolecSet([m1])),
+        CompoundT(MolecSet([m2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([m1, m3]))
+    ]
+
+    assert ReactionT(lhs, rhs).get_lhs() == lhs
+
+def test_ReactionT_get_rhs():
+    # H2 + O2 -> H2O
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(2, ElementT.O)
+    m3 = MoleculeT(1, ElementT.O)
+    lhs = [
+        CompoundT(MolecSet([m1])),
+        CompoundT(MolecSet([m2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([m1, m3]))
+    ]
+
+    assert ReactionT(lhs, rhs).get_rhs() == rhs
+
+def test_ReactionT_get_lhs_coeff():
+    # H2 + O2 -> H20, coeffs [2, 1, 2]
+    h2 = MoleculeT(2, ElementT.H)
+    o2 = MoleculeT(2, ElementT.O)
+    o1 = MoleculeT(1, ElementT.O)
+    lhs = [
+        CompoundT(MolecSet([h2])),
+        CompoundT(MolecSet([o2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([h2, o1]))
+    ]
+    assert ReactionT(lhs, rhs).get_lhs_coeff() == [2, 1]
+
+    # Mg(OH)2 -> MgO + H20, coeffs [1, 1, 1]
+    mg1 = MoleculeT(1, ElementT.Mg)
+    lhs = [
+        CompoundT(MolecSet([mg1, h2, o2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([mg1, o1])),
+        CompoundT(MolecSet([h2, o1]))
+    ]
+    assert ReactionT(lhs, rhs).get_lhs_coeff() == [1]
+
+    # Mg(OH)2 -> MgO + H20, coeffs [2, 3, 4, 3]
+    fe2 = MoleculeT(2, ElementT.Fe)
+    fe1 = MoleculeT(1, ElementT.Fe)
+    o3 = MoleculeT(3, ElementT.O)
+    c1 = MoleculeT(1, ElementT.C)
+    lhs = [
+        CompoundT(MolecSet([fe2, o3])),
+        CompoundT(MolecSet([c1])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([fe1])),
+        CompoundT(MolecSet([c1, o2]))
+    ]
+    assert ReactionT(lhs, rhs).get_lhs_coeff() == [2, 3]
+
+def test_ReactionT_get_rhs_coeff():
+    # H2 + O2 -> H20, coeffs [2, 1, 2]
+    h2 = MoleculeT(2, ElementT.H)
+    o2 = MoleculeT(2, ElementT.O)
+    o1 = MoleculeT(1, ElementT.O)
+    lhs = [
+        CompoundT(MolecSet([h2])),
+        CompoundT(MolecSet([o2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([h2, o1]))
+    ]
+    assert ReactionT(lhs, rhs).get_rhs_coeff() == [2]
+
+    # Mg(OH)2 -> MgO + H20, coeffs [1, 1, 1]
+    mg1 = MoleculeT(1, ElementT.Mg)
+    lhs = [
+        CompoundT(MolecSet([mg1, h2, o2])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([mg1, o1])),
+        CompoundT(MolecSet([h2, o1]))
+    ]
+    assert ReactionT(lhs, rhs).get_rhs_coeff() == [1, 1]
+
+    # Mg(OH)2 -> MgO + H20, coeffs [2, 3, 4, 3]
+    fe2 = MoleculeT(2, ElementT.Fe)
+    fe1 = MoleculeT(1, ElementT.Fe)
+    o3 = MoleculeT(3, ElementT.O)
+    c1 = MoleculeT(1, ElementT.C)
+    lhs = [
+        CompoundT(MolecSet([fe2, o3])),
+        CompoundT(MolecSet([c1])),
+    ]
+    rhs = [
+        CompoundT(MolecSet([fe1])),
+        CompoundT(MolecSet([c1, o2]))
+    ]
+    assert ReactionT(lhs, rhs).get_rhs_coeff() == [4, 3]

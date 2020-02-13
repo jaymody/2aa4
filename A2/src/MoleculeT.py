@@ -1,6 +1,6 @@
 ## @file MoleculeT.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides module for molecules consisting of a single element.
 #  @date 08/02/20 (dd/mm/yy)
 
 from ChemEntity import ChemEntity

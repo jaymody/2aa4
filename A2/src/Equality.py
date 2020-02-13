@@ -1,6 +1,6 @@
 ## @file Equality.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides generic interface module for equality.
 #  @date 08/02/20 (dd/mm/yy)
 
 class Equality:

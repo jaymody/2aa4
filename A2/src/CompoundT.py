@@ -1,6 +1,6 @@
 ## @file CompoundT.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides module for chemical compounds.
 #  @date 08/02/20 (dd/mm/yy)
 
 from ChemEntity import ChemEntity

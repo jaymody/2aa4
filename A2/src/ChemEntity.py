@@ -1,6 +1,6 @@
 ## @file ChemEntity.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides module interface for chemistry entities (molecules, compounds, etc ...).
 #  @date 08/02/20 (dd/mm/yy)
 
 class ChemEntity:

@@ -1,6 +1,6 @@
 ## @file Set.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides generic template module for Sets.
 #  @date 08/02/20 (dd/mm/yy)
 
 from Equality import Equality

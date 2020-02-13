@@ -1,6 +1,6 @@
 ## @file ReactionT.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides module for chemical reactions.
 #  @date 08/02/20 (dd/mm/yy)
 
 import math

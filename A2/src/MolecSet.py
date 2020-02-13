@@ -1,6 +1,6 @@
 ## @file MolecSet.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides Set module for MoleculeT objects.
 #  @date 08/02/20 (dd/mm/yy)
 
 from Set import Set

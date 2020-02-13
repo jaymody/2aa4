@@ -1,6 +1,6 @@
 ## @file ChemTypes.py
 #  @author Jay Mody
-#  @brief todo
+#  @brief Provides module for chemistry types (ElementT).
 #  @date 08/02/20 (dd/mm/yy)
 
 from enum import Enum, auto

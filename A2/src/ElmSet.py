@@ -5,5 +5,6 @@
 
 from Set import Set
 
+## @brief A module for Sets of elements with type ElementT.
 class ElmSet(Set):
     pass

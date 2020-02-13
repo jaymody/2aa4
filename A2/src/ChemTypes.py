@@ -5,6 +5,7 @@
 
 from enum import Enum, auto
 
+## @brief A module that represents the elements in the periodic table.
 class ElementT(Enum):
     H = auto()
     He = auto()

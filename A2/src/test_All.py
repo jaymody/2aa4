@@ -118,3 +118,76 @@ def test_MoleculeT_constit_elems():
 def test_MoleculeT_equals():
     assert MoleculeT(2, ElementT.H).equals(MoleculeT(2, ElementT.H))
     assert MoleculeT(19999, ElementT.C) == MoleculeT(19999, ElementT.C)
+
+
+# CompoundT tests
+def test_CompoundT_init():
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(1, ElementT.O)
+
+    with pytest.raises(ValueError):
+        CompoundT([m1, m2])
+    with pytest.raises(ValueError):
+        CompoundT(set([m1, m2]))
+
+    s = MolecSet([m1, m2])
+    assert CompoundT(s)
+    assert CompoundT(MolecSet([]))
+
+def test_CompoundT_get_molec_set():
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(1, ElementT.O)
+    s1 = MolecSet([m1, m2])
+
+    m3 = MoleculeT(2, ElementT.H)
+    m4 = MoleculeT(1, ElementT.O)
+    s2 = MolecSet([m3, m4])
+
+    c = CompoundT(s1)
+    assert c.get_molec_set() == s2
+
+    s1.add(MoleculeT(1, ElementT.He))
+    print(s1.size())
+    print(c.get_molec_set().size())
+    assert c.get_molec_set() != s1
+
+def test_CompoundT_num_atoms():
+    m1 = MoleculeT(22, ElementT.H)
+    m2 = MoleculeT(1, ElementT.O)
+    m3 = MoleculeT(1, ElementT.O)
+    c = CompoundT(MolecSet([m1, m2, m3]))
+    assert c.num_atoms(ElementT.H) == 22
+    assert c.num_atoms(ElementT.O) == 1
+    assert c.num_atoms(ElementT.He) == 0
+
+    m1 = MoleculeT(1, ElementT.Na)
+    m2 = MoleculeT(1, ElementT.Cl)
+    c = CompoundT(MolecSet([m1, m2]))
+    assert c.num_atoms(ElementT.Na) == 1
+    assert c.num_atoms(ElementT.Cl) == 1
+    assert c.num_atoms(ElementT.H) == 0
+
+def test_CompoundT_constit_elems():
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(1, ElementT.O)
+    c = CompoundT(MolecSet([m1, m2]))
+    assert c.constit_elems() == ElmSet([ElementT.H, ElementT.O])
+
+    m1 = MoleculeT(1, ElementT.Na)
+    m2 = MoleculeT(1, ElementT.Cl)
+    c = CompoundT(MolecSet([m1, m2]))
+    assert c.constit_elems() != ElmSet([ElementT.Na, ElementT.C])
+
+def test_CompoundT_equals():
+    m1 = MoleculeT(2, ElementT.H)
+    m2 = MoleculeT(1, ElementT.O)
+    s1 = MolecSet([m2, m1])
+
+    m3 = MoleculeT(2, ElementT.H)
+    m4 = MoleculeT(1, ElementT.O)
+    s2 = MolecSet([m3, m4])
+
+    assert CompoundT(s1) == CompoundT(s2)
+
+    s2.add(MoleculeT(42, ElementT.U))
+    assert CompoundT(s1) != CompoundT(s2)

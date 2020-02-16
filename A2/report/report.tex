@@ -25,8 +25,14 @@
 
 This report outlines the results of implementing a simplified chemical equation balancing program as specified by the provided MIS. The MIS includes a mix of interfaces and modules with generability and modularity in mind. This report will also discuss test results, critiques of the given design specification, and answer questions about software principles/design in general.
 
+\section{Assumptions}
+\begin{itemize}
+    \item To make testing simple, I assumed that the calculated reaction coefficients must be in their lowest whole number form.
+    \item Since python is weakly typed langauge, some of the specifications weren't directly addressed. Technically, ElmSet and MolecSet are the same as just Set. For example, ElmSet is suppose to only contain elements of type ElementT as per the MIS, but there are actually no restrictions on the element types that may be added to the set.
+    \item Although ElmSet and MolecSet aren't strict as per what their set elements contain, any functions that are suppose to accept parameters of type ElmSet or MolecSet are required to have inputs of that type, otherwise a ValueError is raised (for example, CompoundT's input must be of type MolecSet).
+    \item If the linear system for the reaction coefficients was not solvable, raise a ValueError.
+\end{itemize}
 \section{Testing of the Original Program}
-
 
 \section{Results of Testing Partner's Code}
 

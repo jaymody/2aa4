@@ -1,3 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Setup %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[12pt]{article}
 
 \usepackage{graphicx}
@@ -17,39 +20,109 @@
 \newcounter{stepnum}
 
 \title{Assignment 2 Solution}
-\author{Your name here}
+\author{Jay Mody}
 \date{\today}
 
 \begin {document}
 
 \maketitle
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Intro %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 This report outlines the results of implementing a simplified chemical equation balancing program as specified by the provided MIS. The MIS includes a mix of interfaces and modules with generability and modularity in mind. This report will also discuss test results, critiques of the given design specification, and answer questions about software principles/design in general.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% Assumptions %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Assumptions}
 \begin{itemize}
     \item To make testing simple, I assumed that the calculated reaction coefficients must be in their lowest whole number form.
-    \item Since python is weakly typed langauge, some of the specifications weren't directly addressed. Technically, ElmSet and MolecSet are the same as just Set. For example, ElmSet is suppose to only contain elements of type ElementT as per the MIS, but there are actually no restrictions on the element types that may be added to the set.
-    \item Although ElmSet and MolecSet aren't strict as per what their set elements contain, any functions that are suppose to accept parameters of type ElmSet or MolecSet are required to have inputs of that type, otherwise a ValueError is raised (for example, CompoundT's input must be of type MolecSet).
-    \item If the linear system for the reaction coefficients was not solvable, raise a ValueError.
+    \item Since python is weakly typed langauge, some of the specifications weren't directly addressed. Technically, ElmSet and MolecSet are the same as just Set. For example, ElmSet is suppose to only contain elements of type ElementT as per the MIS, but there are actually no restrictions on the element types that may be added to an ElmSet.
+    \item Any functions that are suppose to accept parameters of type ElmSet or MolecSet are required to have inputs of that type, otherwise a ValueError is raised (for example, CompoundT's input must be of type MolecSet).
 \end{itemize}
 
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% Rationale %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Test Cases Rationale}
 Similar to assignment 1, my test cases covered everything from normal intended use, to boundary cases, to exceptions. Since there was an emphasis on formal specifications (MIS) for this assignment, I wanted to make sure I covered type testinig for the inputs for the module constructors. Also, I tested the immutability and encapsulation of objects to ensure the software was robust. For boolean returning unit tests, I made sure to cover both True and False cases (sometimes functions will always return True, so if you only had True cases, the bug would fly under your radar). I tried to fit ~2-4 test cases per function, one for normal use, and the rest for trickier edge cases. Of all the modules however, I was the most rigirous with ReactionT, as that was the module with the most complex/error prone code in my opinion.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Test Results %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results of Testing the Original Program}
 Here's a summary of the pytest results for testAll.py on my code:
 
-\section{Results of Testing Partner's Code}
+\begin{lstlisting}
+            Name                Stmts   Miss  Cover
+            ---------------------------------------
+            src/A2Examples.py      34     34     0%
+            src/ChemEntity.py       5      2    60%
+            src/ChemTypes.py      120      0   100%
+            src/CompoundT.py       18      0   100%
+            src/ElmSet.py           3      0   100%
+            src/Equality.py         5      1    80%
+            src/MolecSet.py         3      0   100%
+            src/MoleculeT.py       25      0   100%
+            src/ReactionT.py       42      2    95%
+            src/Set.py             19      0   100%
+            src/test_All.py       208      0   100%
+            ---------------------------------------
+            TOTAL                 482     39    92%
 
+            ========= 23 passed, in 0.39s =========
+\end{lstlisting}
+
+All 23 unit tests were passed, with the coverage for all the modules at almost 100\%. Testing revealed a couple of errors, mostly in ReactionT, but I was able to fix them all before the deadline.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Partner Test Results %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results of Testing Partner's Code}
+Here's a summary of the pytest results for testAll.py on my partner's code:
+\begin{lstlisting}
+            Name                Stmts   Miss  Cover
+            ---------------------------------------
+            src/A2Examples.py      34     34     0%
+            src/ChemEntity.py       5      2    60%
+            src/ChemTypes.py      120      0   100%
+            src/CompoundT.py       19      0   100%
+            src/ElmSet.py           3      0   100%
+            src/Equality.py         5      2    60%
+            src/MolecSet.py         3      0   100%
+            src/MoleculeT.py       23      0   100%
+            src/ReactionT.py       62      6    90%
+            src/Set.py             25      0   100%
+            src/test_All.py       208     14    93%
+            ---------------------------------------
+            TOTAL                 507     58    89%
+
+            ==== 3 failed, 20 passed in 0.95s =====
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% Critiques %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Critique of Given Design Specification}
 
-\section{Answers}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Answers %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Answers}
 \begin{enumerate}[a)]
 
+%%%%% a) %%%%%
 \item The main advantage of the formal specification over the natural langauge one from A1 was that there was a lot less ambiguity. Inputs, outputs, types, and similar properties were all strictly specified, leaving little room for intepretation. However, the huge disadvantage was that I had to to spend a good half of my time working on this project simply trying to understand what each module did, how they function in relation to one another, and the semantics of the program. All in all, the MIS specification was more frustrating to deal with as it was easier to make the interpretations in A1 than it was trying to understand the semantics of A2. Ideally, a design specification has both elements in my opinion. A detalied MIS as well as a natural language description of the underlying semantics.
 
+%%%%% b) %%%%%
 \item The process of converting strings to logical syntatic components is called parsing, where the string is iterated such that it's substrings are interpreted to create internal object representations of what that string is suppose to be (for example, for this assignment, the string "H2" would convert to MoleculeT(2, ElementT.H)). One way this can be implemented is to have each module have a parseString() method, where it accepts a string as input, and returns the corresponding object, or raises an error if the string is not a valid representation of the object. This way, there is no need to create any additional modules. ReactionT would use CompoundT's parseString, which would use MoleculeT's parseString, which would use ElementT's parseString. For example:
 \begin{lstlisting}
 class ReactionT:
@@ -64,6 +137,7 @@ class ReactionT:
     return ReactionT(lhs, rhs)
 \end{lstlisting}
 
+%%%%% c) %%%%%
 \item Assuming that the atomic number of an element is equivalent to it's mass, with the current implementation, we can simply use the enumerated value of the element to calculate weight. You would add a function to calculate the mass in MoleculeT.py and CompoundT.py that would compute the following sum:\\\\
 ($+e : \forall e | e \in ChemEntity.constit\_elems() : ChemEntity.num\_atoms(e) * e$)
 \\\\
@@ -71,8 +145,10 @@ However, since the atomic number isn't the best representation of the mass of an
 ($+e : \forall e | e \in ChemEntity.constit\_elems() : ChemEntity.num\_atoms(e) * e.get\_mass()$)
 \\
 
+%%%%% d) %%%%%
 \item In chemistry, balanced equations must be written with the lowest whole number positive coefficients. This means that fractional coefficients are not allowed, as it doesn't make sense to have a third of a compound, with the excpetion of some molecules, like $O_2$, that are allowed to have $\frac{1}{2}$ as their coefficient. In general, \emph{rational} real number coefficients aren't mathematically "wrong" since they're just scaled from the "right" answer by some scalar. However, if one or more of the coefficients is an irrational number, then there is no solution, but the way our software is designed, such a result would misinformatively spit out an answer. One (very inefficient but correct) way to calculate the whole right answer would be to simply multiply the coefficients by 1,2,3, etc... until you find a configuration in which all the coefficients are whole. Source: \url{https://www.nyu.edu/classes/tuckerman/adv.chem/lectures/lecture_2/node3.html}
 
+%%%%% e) %%%%%
 \item Dynamic typing means that variables, functions, and parameters are given types during runtime, while static typing means that the types must be known/declared during compilation. One advantage of static typing is that it is more robust. For example, if we wanted to write a function to calculate if the substring "2AA4" was in a string, we might write in Python (which is dynamic):
 \begin{lstlisting}
 def check2AA4(mystring):
@@ -80,19 +156,23 @@ def check2AA4(mystring):
 \end{lstlisting}
 Unfortunately, this has the unintended consequence of also working with list (if the element "2AA4" exists in a list). This could lead to many headscratching bugs that occur during the runtime rather than during compile time. On the other hand, the advantage of dynamic programming is that writing code becomes easier, with less overhead and repetitive code.
 
+%%%%% f) %%%%%
 \item
 \begin{lstlisting}
 [(i, i+2) for i in range(1, 10-2, 2)]
 \end{lstlisting}
 
+%%%%% g) %%%%%
 \item
 \begin{lstlisting}
 def my_funky_len_function(mylist):
     return sum(map(lambda e : 1, mylist))
 \end{lstlisting}
 
+%%%%% h) %%%%%
 \item An interface is ............, an implementation is ............
 
+%%%%% i) %%%%%
 \item
 \begin{itemize}[\label{}]
     \item \textbf{Abstraction}:
@@ -104,6 +184,10 @@ def my_funky_len_function(mylist):
 
 \end{enumerate}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Code %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
 \lstset{language=Python, basicstyle=\tiny, breaklines=true, showspaces=false,

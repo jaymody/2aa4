@@ -50,7 +50,7 @@ This report outlines the results of implementing a simplified chemical equation 
 %%%%%%%%% Rationale %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Test Cases Rationale}
-Similar to assignment 1, my test cases covered everything from normal intended use, to boundary cases, to exceptions. Since there was an emphasis on formal specifications (MIS) for this assignment, I wanted to make sure I covered type testinig for the inputs for the module constructors. Also, I tested the immutability and encapsulation of objects to ensure the software was robust. For boolean returning unit tests, I made sure to cover both True and False cases (sometimes functions will always return True, so if you only had True cases, the bug would fly under your radar). I tried to fit ~2-4 test cases per function, one for normal use, and the rest for trickier edge cases. Of all the modules however, I was the most rigirous with ReactionT, as that was the module with the most complex/error prone code in my opinion.
+Similar to assignment 1, my test cases covered everything from normal intended use, to boundary cases, to exceptions. Since there was an emphasis on formal specifications (MIS) for this assignment, I wanted to make sure I covered type testing for the inputs for the module object constructors. Also, I tested the immutability and encapsulation of objects to ensure the software was robust. For boolean returning unit tests, I made sure to cover both True and False cases (sometimes functions will always return True, so if you only had test cases that tested if a statement was True, the bug would be missed). I tried to fit ~2-4 test cases per function, one for normal use, and the rest for trickier edge cases. Of all the modules however, I was the most rigirous with ReactionT, as that was the module with the most complex/error prone code in my opinion.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Test Results %%%%%%%%
@@ -78,7 +78,7 @@ Here's a summary of the pytest results for testAll.py on my code:
             ========= 23 passed, in 0.39s =========
 \end{lstlisting}
 
-All 23 unit tests were passed, with the coverage for all the modules at almost 100\%. Testing revealed a couple of errors, mostly in ReactionT, but I was able to fix them all before the deadline.
+All 23 unit tests were passed, with the coverage for all the modules at almost 100\%. While in the testing process, I came across a couple of bugs, mostly in ReactionT, but I was able to fix them all before the deadline.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,13 +106,80 @@ Here's a summary of the pytest results for testAll.py on my partner's code:
             ==== 3 failed, 20 passed in 0.95s =====
 \end{lstlisting}
 
+Of the 23 unit tests, the following three tests failed:
+\begin{itemize}
+    \item test\_MoleculeT\_init
+    \item test\_CompoundT\_init
+    \item test\_CompoundT\_get\_molec\_set
+\end{itemize}
+Below I summarize each test and why it failed.
 
+\clearpage
+\subsection{test\_MoleculeT\_init and test\_CompoundT\_init}
+Both these tests failed because my partner assumed that the inputs to the constructors for MoleculeT and CompountT would be correct. I assumed the inputs may not be correct, and raised a ValueError accordingly. So, when I tried to check that a ValueError would be raised for invalid inputs, none were recieved. Here's the trace for those two tests:
+\begin{lstlisting}
+__________ test_MoleculeT_init ___________
+
+    def test_MoleculeT_init():
+        with pytest.raises(ValueError):
+>           MoleculeT(1, "He")
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+src/test_All.py:90: Failed
+
+
+
+__________ test_CompoundT_init ___________
+
+    def test_CompoundT_init():
+        m1 = MoleculeT(2, ElementT.H)
+        m2 = MoleculeT(1, ElementT.O)
+
+        with pytest.raises(ValueError):
+>           CompoundT([m1, m2])
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+src/test_All.py:129: Failed
+\end{lstlisting}
+
+\clearpage
+\subsection{test\_CompoundT\_get\_molec\_set}
+This test failed as a result of a failure to ensure encapsulation for CompoundT. In this test case, I created a MolecSet s1, which was used to create a CompoundT c. I then checked if adding an element to s1 also changed the internal MolecSet of the compound. If encapsulation was preserved, this would not be the case (for my code, I used the copy library in Python to ensure this was not the case). However, this was not the case in my partner's code, which explains why the test failed. Here's the trace for the test:
+\begin{lstlisting}
+__________ test_CompoundT_get_molec_set __________
+
+    def test_CompoundT_get_molec_set():
+        m1 = MoleculeT(2, ElementT.H)
+        m2 = MoleculeT(1, ElementT.O)
+        s1 = MolecSet([m1, m2])
+
+        m3 = MoleculeT(2, ElementT.H)
+        m4 = MoleculeT(1, ElementT.O)
+        s2 = MolecSet([m3, m4])
+
+        c = CompoundT(s1)
+        assert c.get_molec_set() == s2
+
+        s1.add(MoleculeT(1, ElementT.He))
+        print(s1.size())
+        print(c.get_molec_set().size())
+>       assert c.get_molec_set() != s1
+E       assert <MolecSet.MolecSet object at 0x11db08990> != <MolecSet.MolecSet object at 0x11db08990>
+E        +  where <MolecSet.MolecSet object at 0x11db08990> = <bound method CompoundT.get_molec_set of <CompoundT.CompoundT object at 0x11db08a10>>()
+E        +    where <bound method CompoundT.get_molec_set of <CompoundT.CompoundT object at 0x11db08a10>> = <CompoundT.CompoundT object at 0x11db08a10>.get_molec_set
+
+src/test_All.py:152: AssertionError
+\end{lstlisting}
+
+
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% Critiques %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Critique of Given Design Specification}
 
 
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Answers %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -138,10 +205,10 @@ class ReactionT:
 \end{lstlisting}
 
 %%%%% c) %%%%%
-\item Assuming that the atomic number of an element is equivalent to it's mass, with the current implementation, we can simply use the enumerated value of the element to calculate weight. You would add a function to calculate the mass in MoleculeT.py and CompoundT.py that would compute the following sum:\\\\
+\item Assuming that the atomic number of an element is equivalent to it's mass, with the current implementation, we can simply use the enumerated value of the element to calculate weight. Then, you would add a function to calculate the mass in MoleculeT.py and CompoundT.py that would compute the following sum:\\\\
 ($+e : \forall e | e \in ChemEntity.constit\_elems() : ChemEntity.num\_atoms(e) * e$)
 \\\\
-However, since the atomic number isn't the best representation of the mass of an element, we can be more accurate by redesigning ElementT such that an element has a unique id (the atomic number) as well as the actual mass (). In this case, the sum might look like this:\\\\
+However, since the atomic number isn't the best representation of the mass of an element, we can be more accurate by redesigning ElementT such that an element has a unique id (the atomic number) as well as the actual mass number. In this case, the sum might look like this:\\\\
 ($+e : \forall e | e \in ChemEntity.constit\_elems() : ChemEntity.num\_atoms(e) * e.get\_mass()$)
 \\
 

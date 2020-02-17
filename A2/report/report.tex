@@ -20,7 +20,7 @@
 \newcounter{stepnum}
 
 \title{Assignment 2 Solution}
-\author{Jay Mody}
+\author{Jay Mody\\400195508\\modyj}
 \date{\today}
 
 \begin {document}
@@ -177,7 +177,9 @@ src/test_All.py:152: AssertionError
 %%%%%%%%% Critiques %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Critique of Given Design Specification}
-
+One thing I really liked about the design specification was that there was very little room for interpretation. Everything was formally specified which let me focus on the code rather than having to guess client functionality and making decisions. Having som of functions specified mathematically was also a very quick and efficient way to  precisely communicate to me, the programmer, what this function needed to do. In addition the modularity helped reduce the amount of repetitive code. Rather than having all modules have an \_\_eq\_\_ function, only the Equality module needed it and everything else simply inherited that functionality, which reduced the implementation time. It was also nice to have consitency between modules via the interfaces. Finally, the design specification gave you enough information to not leave any ambiguity, but also kept it minimal (no uneeded functions, specifications, etc...).
+\\\\
+One area that needed heavy improvements were the module/function semantics. It took me a good chunk of time to simply understand what each module representated, what it was trying to achieve, and most importantly, how each module was suppose to interact with one another. Some simple natural language explanations and module diagrams would have been extremely helpful. Especially with a high level of generality in the design specification, with 9 total modules/interfaces, it would have been nice to see a visual of what was implementing what, and what each module was represeting with examples (MoleculeT $=> O_2$, CompoundT $=> H_2O$, etc ...). However, once I understood the context of the assignment, it was pretty easy to go from there.
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -237,16 +239,16 @@ def my_funky_len_function(mylist):
 \end{lstlisting}
 
 %%%%% h) %%%%%
-\item An interface is ............, an implementation is ............
+\item An interface is abstract design specification for some module(s). For example, we can define an interface for animal, and declare that it must have an eat(), sleep(), and drink() method. We know what goes into each of these methods, and we know the outcome, but animal itself is not a module, rather it specifies what you can expect from a module that implements it. An implementation is exactly as it sounds, an implementation of an interface. In this example, you can imagine an implementation for animal called human. Human must implement an eat(), sleep(), and drink() method for it to be a valid module for the animal interface. The advantage of such a structure is that one, many implementations can be made from the same module, and two, the interface specificies only what the is necessary for the client to interact with it (absract).
 
 %%%%% i) %%%%%
 \item
 \begin{itemize}[\label{}]
-    \item \textbf{Abstraction}:
-    \item \textbf{Anticipation of change}:
-    \item \textbf{Generality}:
-    \item \textbf{Modularity}:
-    \item \textbf{Seperation of concerns}:
+    \item \textbf{Seperation of concerns}: Good software will seperate different concerns into independent parts. It let's us break down a problem into parts and tackle each one individually. Otherwise, programs can get complex and bloated, making it hard to make changes and debug.
+    \item \textbf{Abstraction}: Good module interfaces are not concerned about the underlying implementation. It's best to abstract it down to it's minimal parts: inputs and outputs.
+    \item \textbf{Anticipation of change}: Often as software engineers, we need to add features and functionality to our programs. As such, we should design our module interfaces with change in mind. A good example can be found in recursive algorithms. Some recursive algorithms require additional parameters that often have some base value. Rather than expecting our client to input those base values, we might wrap the recusive function with a more simplified one that the client can interact with. Why? If you decide later that you want to switch to an iterative approach, then you can do so without changing the interface.
+    \item \textbf{Generality}: If we design software that is too specific, it can often prevent expansion. Generality leaves space for added functionality, and also abstracts the problem to inform better modularity.
+    \item \textbf{Modularity}: One way to go about seperation of concerns is through modularity, where different software components can be broken up into their own modules, which are defined in a module's interface.
 \end{itemize}
 
 \end{enumerate}

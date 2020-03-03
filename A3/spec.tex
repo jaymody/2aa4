@@ -311,14 +311,16 @@ $\exists\ \mbox{row} \in S \,.\, \lnot(|\mbox{row}| = |S[0]|)$ & IllegalArgument
 \begin{itemize}
 \item transition: \wss{?} $s[p.row()][p.col()] := v$
 \item exception: \wss{Generate an exception if the point lies outside of the
-    map.}
+    map.} \\
+$exc := \lnot (\mbox{validPoint(p)}) \Rightarrow \mbox{IndexOutOfBoundsException}$
 \end{itemize}
 
 \noindent get($p$):
 \begin{itemize}
-\item output: \wss{?}
+\item output: \wss{?} $out := s[p.row()][p.col()]$
 \item exception: \wss{Generate an exception if the point lies outside of the
-    map.}
+    map.} \\
+$exc := \lnot (\mbox{validPoint(p)}) \Rightarrow \mbox{IndexOutOfBoundsException}$
 \end{itemize}
 
 \noindent getNumRow():
@@ -342,23 +344,27 @@ $\exists\ \mbox{row} \in S \,.\, \lnot(|\mbox{row}| = |S[0]|)$ & IllegalArgument
 \noindent count($t$: T):
 \begin{itemize}
 \item output: \wss{Count the number of times the value $t$ occurs in the 2D
-    sequence.}
+    sequence.} \\
+$out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} \land s[i][j] = t : 1)$
 \item exception: None
 \end{itemize}
 
 \noindent countRow($t$: T, $i: \mathbb{N}$):
 \begin{itemize}
 \item output: \wss{Count the number of times the value $t$ occurs in row
-    $i$.}
+    $i$.} \\
+$out := +(j : \mathbb{N} | \mbox{validCol(j)} \land s[i][j] = t : 1)$
 \item exception: \wss{Generate an exception if the index is not a valid
-    row.}
+    row.} \\
+$exc := \lnot (\mbox{validRow(i)}) \Rightarrow \mbox{IndexOutOfBoundsException}$
 \end{itemize}
 
 \noindent area($t$: T):
 \begin{itemize}
 \item output: \wss{Return the total area in the grid taken up by cell value $t$.
     The length of each side of each cell in the grid is
-    scale.}
+    scale.} \\
+$out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} \land s[i][j] = t : scl*scl)$
 \item exception: None
 \end{itemize}
 
@@ -367,14 +373,17 @@ $\exists\ \mbox{row} \in S \,.\, \lnot(|\mbox{row}| = |S[0]|)$ & IllegalArgument
 \noindent validRow: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid row
   number.}\\
+$\mbox{validRow(n)} \equiv 0 \leq n \leq (nRow - 1)$\\
 
 \noindent validCol: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid column
   number.}\\
+$\mbox{validCol(n)} \equiv 0 \leq n \leq (nCol - 1)$\\
 
 \noindent validPoint: $\mbox{PointT} \rightarrow \mathbb{B}$\\
 \noindent \wss{Returns true if the given point lies within the boundaries of the
   map.}\\
+$\mbox{validPoint(p)} \equiv \mbox{validRow(p.row())} \land \mbox{validCol(p.col())}$\\
 
 \newpage
 

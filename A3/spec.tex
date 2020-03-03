@@ -373,12 +373,12 @@ $out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} \land s
 \noindent validRow: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid row
   number.}\\
-$\mbox{validRow(n)} \equiv 0 \leq n \leq (nRow - 1)$\\
+$\mbox{validRow(n)} \equiv 0 \leq n \leq (\mbox{nRow} - 1)$\\
 
 \noindent validCol: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid column
   number.}\\
-$\mbox{validCol(n)} \equiv 0 \leq n \leq (nCol - 1)$\\
+$\mbox{validCol(n)} \equiv 0 \leq n \leq (\mbox{nCol} - 1)$\\
 
 \noindent validPoint: $\mbox{PointT} \rightarrow \mathbb{B}$\\
 \noindent \wss{Returns true if the given point lies within the boundaries of the
@@ -391,7 +391,8 @@ $\mbox{validPoint(p)} \equiv \mbox{validRow(p.row())} \land \mbox{validCol(p.col
 
 \subsection* {Template Module}
 
-\wss{Instantiate the generic ADT Seq2D(T) with the type LanduseT}
+\wss{Instantiate the generic ADT Seq2D(T) with the type LanduseT}\\
+LanduseMapT is Seq2D(LanduseT)
 
 \newpage
 
@@ -423,20 +424,23 @@ ascendingRows & & $\mathbb{B}$ & \\
 
 \noindent total():
 \begin{itemize}
-\item output: \wss{Total of all the values in all of the cells.}
+\item output: \wss{Total of all the values in all of the cells.}\\
+$out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} : s[i][j])$
 \item exception: None
 \end{itemize}
 
 \noindent max():
 \begin{itemize}
-\item output: \wss{Find the maximum value in the 2d grid of integers}
+\item output: \wss{Find the maximum value in the 2d grid of integers}\\
+$TODO$
 \item exception: None
 \end{itemize}
 
 \noindent ascendingRows():
 \begin{itemize}
 \item output: \wss{Returns True if the sum of all values in each row increases
-    as the row number increases, otherwise, returns False.}
+    as the row number increases, otherwise, returns False.}\\
+$TODO$
 \item exception: None
 \end{itemize}
 
@@ -445,10 +449,12 @@ ascendingRows & & $\mathbb{B}$ & \\
 \noindent validRow: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid row
   number.}\\
+$\mbox{validRow(n)} \equiv 0 \leq n \leq (\mbox{nRow} - 1)$\\
 
 \noindent validCol: $\mathbb{N} \rightarrow \mathbb{B}$\\
 \noindent \wss{returns true if the given natural number is a valid column
   number.}\\
+$\mbox{validCol(n)} \equiv 0 \leq n \leq (\mbox{nCol} - 1)$\\
 
 \newpage
 

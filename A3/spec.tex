@@ -142,8 +142,7 @@ N/A
 
 \subsubsection* {Exported Types}
 
-\wss{What should be written here?}
-None
+\wss{What should be written here?} PointT = ?
 
 \subsubsection* {Exported Access Programs}
 
@@ -201,7 +200,7 @@ PointT($row, col$):
 
 \noindent translate($\Delta r$, $\Delta c$):
 \begin{itemize}
-\item \wss{What should go here?} transition: $r, c := r + \Delta r, c + \Delta c$
+\item \wss{What should go here?} output: $out := \mbox{PointT}(r + \Delta r, c + \Delta c)$
 \item exception: \wss{What should go here?} None
 \end{itemize}
 
@@ -284,17 +283,33 @@ called once.
 
 Seq2D($S$, scl):
 \begin{itemize}
-\item transition: \wss{Fill in the transition.}
+\item transition: \wss{Fill in the transition.}\\
+$s, scale, nRow, nCol := S, scl, |S|, |S[0]|$
 \item output: $\mathit{out} := \mathit{self}$
 \item exception: \wss{Fill in the exception.  One should be generated if the
     scale is less than zero, or the input sequence is empty, or the number of
     columns is zero in the first row, or the number of columns in any row is
-    different from the number of columns in the first row.}
+    different from the number of columns in the first row.}\\ \\
+\begin{tabular}{|p{6cm}|l|}
+\hhline{~|-|}
+\multicolumn{1}{r|}{} & \multicolumn{1}{l|}{$exc :=$}\\
+\hhline{|-|-|}
+$scl < 0$ & IllegalArgumentException \\
+\hhline{|-|-|}
+$|S| = 0$ & IllegalArgumentException \\
+\hhline{|-|-|}
+$|S[0]|=0$& IllegalArgumentException \\
+\hhline{|-|-|}
+$\exists\ \mbox{row} \in S \,.\, \lnot(|\mbox{row}| = |S[0]|)$ & IllegalArgumentException \\
+\hhline{|-|-|}
+\end{tabular}
+
+
 \end{itemize}
 
 \noindent set($p, v$):
 \begin{itemize}
-\item transition: \wss{?}
+\item transition: \wss{?} $s[p.row()][p.col()] := v$
 \item exception: \wss{Generate an exception if the point lies outside of the
     map.}
 \end{itemize}

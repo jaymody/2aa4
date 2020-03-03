@@ -364,7 +364,7 @@ $exc := \lnot (\mbox{validRow(i)}) \Rightarrow \mbox{IndexOutOfBoundsException}$
 \item output: \wss{Return the total area in the grid taken up by cell value $t$.
     The length of each side of each cell in the grid is
     scale.} \\
-$out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} \land s[i][j] = t : scl*scl)$
+$out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} \land s[i][j] = t : \mbox{scale}^2)$
 \item exception: None
 \end{itemize}
 
@@ -432,7 +432,7 @@ $out := +(i,j : \mathbb{N} | \mbox{validRow(i)} \land \mbox{validCol(j)} : s[i][
 \noindent max():
 \begin{itemize}
 \item output: \wss{Find the maximum value in the 2d grid of integers}\\
-$TODO$
+$\exists \ x,y : \mathbb{Z} \,.\, (\mbox{validRow}(x) \land \mbox{validCol}(y) \land \\ (\forall i,j : \mathbb{Z} \,.\, \mbox{validRow}(i) \land \mbox{validCol}(j) \land s[x][y] \geq s[i][j])) \Rightarrow out := s[x][y])$
 \item exception: None
 \end{itemize}
 
@@ -440,7 +440,7 @@ $TODO$
 \begin{itemize}
 \item output: \wss{Returns True if the sum of all values in each row increases
     as the row number increases, otherwise, returns False.}\\
-$TODO$
+$\forall \ i, j : \mathbb{Z} \,.\, \mbox{validRow}(i) \land \mbox{validRow}(i-1) \land \mbox{validCol}(j) \land +(s[i][j] - s[i-1][j]) > 0$
 \item exception: None
 \end{itemize}
 
@@ -467,6 +467,17 @@ given in the assignment description, will expose the use of ArrayList for Seq2D.
  How might you change this?  There are repeated local functions in two modules.
 What could you do about this?}\\
 
+The most notable mistake in the design specification is that it's missing 2 modules, the Equality module and the Landtypes module.
+Equality is inherited by PointT and Landtypes is used by LanduseT, but neither are ever defined anywhere in the MIS. To make matter worse,
+LanduseT is redundant. It's sole purpose is to store a Landtype variable, adding no additional functionality.
+To remove this redundancy, it would be advantagous to use Landtype directly, removinng an unecessary layer of abstraction.
+Additionally, there is a redundancy with validRow/validCol, as they are duplicated in Seq2D and DemT as local functions.
+A better design would be to include validRow, validCol, and validPoint all as part of the interface for
+Seq2D, so that any modules that inherit it will also have access to those functions.
+Furthermore, the use of an ArrayList in the implementation for Seq2D as stated in the assignment description,
+may not be the optimal option for the task. Seq2D is analagous to a matrix, with an equivalent number of
+elements in each row. To make things simpler, we can make the use of a 2 dimensional array, rather than an ArrayList of ArrayLists.
+\\\\
 In addition to your critique, please address the following questions:
 
 \begin{enumerate}
@@ -474,15 +485,40 @@ In addition to your critique, please address the following questions:
   as for A2, but this idea was dropped.  In the original version Seq2D inherited
   the Equality interface.  Although this works in Java with the LanduseMapT, it is
   problematic for DemT.  Why is it problematic?  (Hint: DEMT is instantiated
-  with the Java type Integer.)
+  with the Java type Integer.)\\
+
+  Classes in Java (like Integer, ArrayList, etc ...) automatically inherit an equivalence method.
+  By default, this method ".equals()", compares object ids, however, in many cases this method is overriden to test for equivalence for
+  whatever data it is representing. Since LanduseT is a class we defined, this is no problem if we define our own equals method,
+  but this may be problematic for DemT, as Integer already has it's own defined equals method.
+
 \item Although Java has several interfaces as part of the standard language,
   such as the Comparable interface, there is no Equality interface.  Instead
   equals is provided through inheritance from Object.  Why do you think the
   Java language designers decided to use inheritance for equality, instead of
   providing an interface?
+
+  One reason why the Java designers may have decided to use inheritance for equality is that
+  it allows them to define the default equivalence behaviour of an object by if their id's are equivalent (aka the same object in memory).
+  Another, more important reason, is that it reduces ambiguity and redundancy.
+  Many objects may have an equality property, but not a less than or greater than property. To make
+  things less ambigious, it's easier to have equality inherited and overridden than via some workaround
+  with compareTo (or as a seperate interface). As for redundancy, equality is a very common property (like toString),
+  so it's easier to have it as it's own inhereited method rather than as an interface.
+
 \item The qualities of good module interface push the design of the interface in
   different directions. Why is it rarely possible to achieve a module interface
   that simultaneously is essential, minimal and general?
+
+  To create the most general interface, you often really need to think ahead in the future
+  and realize the most modular and encaplsulating form of the module. Often this involves cutting
+  down many functions that may have been essential to the initial design, but not to it's
+  more general version. Or, on the other hand, you need to define added functionality to
+  encaplsulate a wider range of modules that may implement an interface. In this sense, designing
+  interfaces that are general, essential, and minimal proves to be a difficult task. You may
+  have to redesign you're interface, add new modules/interfaces, and go through many iterations
+  before you can come to a healthy balance of all three.
+
 \end{enumerate}
 
 \end {document}

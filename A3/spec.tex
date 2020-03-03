@@ -143,6 +143,7 @@ N/A
 \subsubsection* {Exported Types}
 
 \wss{What should be written here?}
+None
 
 \subsubsection* {Exported Access Programs}
 
@@ -164,8 +165,8 @@ translate & $\mathbb{Z}$, $\mathbb{Z}$ & PointT & ~\\
 
 \subsubsection* {State Variables}
 
-$r$: \wss{What is the type of the state variables?}\\
-$c$: \wss{What is the type of the state variables?}
+$r$: \wss{What is the type of the state variables?} $\mathbb{Z}$\\
+$c$: \wss{What is the type of the state variables?} $\mathbb{Z}$
 
 \subsubsection* {State Invariant}
 
@@ -181,7 +182,7 @@ an existing object.
 
 PointT($row, col$):
 \begin{itemize}
-\item transition: \wss{What should the state transition be for the constructor?}
+\item transition: \wss{What should the state transition be for the constructor?}\\$r, c := row, col$
 \item output: $out := \mathit{self}$
 \item exception: None
 \end{itemize}
@@ -194,14 +195,14 @@ PointT($row, col$):
 
 \noindent col():
 \begin{itemize}
-\item \wss{What should go here?}
+\item \wss{What should go here?} output: $out := c$
 \item exception: None
 \end{itemize}
 
 \noindent translate($\Delta r$, $\Delta c$):
 \begin{itemize}
-\item \wss{What should go here?}
-\item exception: \wss{What should go here?}
+\item \wss{What should go here?} transition: $r, c := r + \Delta r, c + \Delta c$
+\item exception: \wss{What should go here?} None
 \end{itemize}
 
 \newpage

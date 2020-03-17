@@ -19,7 +19,7 @@ public class Seq2D<T> {
 
     /**
      * @brief Constructor for Seq2D.
-     * @param S ArrayList of ArrayList of T to initialize the matrix. S and it's first element must be non-empty and each row must have the same number of columns.
+     * @param S ArrayList of ArrayList of T to initialize Seq2D. S and it's first element must be non-empty and each row must have the same number of columns.
      * @param scl Scale value of a cell. Must a non-zero postive real number.
      * @thows IllegalArgumentException Thrown if scl or S are not valid arguments according to the stated restrictions.
      */
@@ -48,6 +48,12 @@ public class Seq2D<T> {
         this.nCol = this.s.get(0).size();
     }
 
+    /**
+     * @brief Sets the value at a PointT p.
+     * @param p Point in Seq2D to set value.
+     * @param v Value to set.
+     * @thows IndexOutOfBoundsException Thrown if p is not a valid point in Seq2D.
+     */
     public void set(PointT p, T v) throws IndexOutOfBoundsException {
         if (!this.validPoint(p))
             throw new IllegalArgumentException("Point p must be within the bounds of nRow and nCol");
@@ -55,6 +61,11 @@ public class Seq2D<T> {
         this.s.get(p.row()).set(p.col(), v);
     }
 
+    /**
+     * @brief Gets the value at a PointT p.
+     * @param p Point in Seq2D to get value.
+     * @returns Value at the point.
+     */
     public T get(PointT p) throws IndexOutOfBoundsException {
         if (!validPoint(p))
             throw new IllegalArgumentException("Point p must be within the bounds of nRow and nCol");
@@ -62,18 +73,35 @@ public class Seq2D<T> {
         return this.s.get(p.row()).get(p.col());
     }
 
+    /**
+     * @brief Gets the number of rows in Seq2D.
+     * @returns An integer representing the number of rows.
+     */
     public int getNumRow() {
         return this.nRow;
     }
 
+    /**
+     * @brief Gets the number of columns in Seq2D.
+     * @returns An integer representing the number of columns.
+     */
     public int getNumCol() {
         return this.nCol;
     }
 
+    /**
+     * @brief Gets the scale value of Seq2D.
+     * @returns The scale as a double.
+     */
     public double getScale() {
         return this.scale;
     }
 
+    /**
+     * @brief Gets the number of times t occurs in Seq2D.
+     * @param t The value to count in Seq2D.
+     * @returns The number of times t occured in Seq2D.
+     */
     public int count(T t) {
         int count = 0;
 
@@ -85,6 +113,12 @@ public class Seq2D<T> {
         return count;
     }
 
+    /**
+     * @brief Gets the number of times t occurs at a specified row.
+     * @param t The value to count in the row.
+     * @param i Index of the row.
+     * @returns The number of times t occured in row i.
+     */
     public int countRow(T t, int i) {
         if (!this.validRow(i))
             throw new IllegalArgumentException("i must be < nRow");
@@ -98,6 +132,11 @@ public class Seq2D<T> {
         return count;
     }
 
+     /**
+     * @brief Calculates the total area occupied by a value t.
+     * @param t The value to measure the area.
+     * @returns The area as a double.
+     */
     public double area(T t) {
         return this.count(t) * this.scale;
     }

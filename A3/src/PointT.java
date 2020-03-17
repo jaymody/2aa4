@@ -7,11 +7,19 @@
 
 package src;
 
+/**
+ * @brief Module for 2D integer vectors (cartesian coordinates).
+ */
 public class PointT
 {
     private int r;
     private int c;
 
+    /**
+     * @brief Constructor for PointT.
+     * @param row "x" or "row" coordinate of the point.
+     * @param col "y" or "column" coordinate of the point.
+     */
     public PointT(int row, int col) {
         this.r = row;
         this.c = col;

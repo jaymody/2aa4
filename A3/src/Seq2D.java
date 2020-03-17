@@ -8,12 +8,21 @@ package src;
 
 import java.util.ArrayList;
 
+/**
+ * @brief Generic template module for 2D matrices.
+ */
 public class Seq2D<T> {
     protected ArrayList<ArrayList<T>> s;
     protected double scale;
     protected int nRow;
     protected int nCol;
 
+    /**
+     * @brief Constructor for Seq2D.
+     * @param S ArrayList of ArrayList of T to initialize the matrix. S and it's first element must be non-empty and each row must have the same number of columns.
+     * @param scl Scale value of a cell. Must a non-zero postive real number.
+     * @thows IllegalArgumentException Thrown if scl or S are not valid arguments according to the stated restrictions.
+     */
     public Seq2D(ArrayList<ArrayList<T>> S, double scl) throws IllegalArgumentException {
         if (scl < 0)
             throw new IllegalArgumentException("scl must be > 0");

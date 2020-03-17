@@ -19,13 +19,6 @@ public class TestDemT {
 
     @Before
     public void setUp() {
-        // ArrayList<ArrayList<Integer>> d = new ArrayList<ArrayList<Integer>>();
-        // d.add(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4)));
-        // d.add(new ArrayList<Integer>(Arrays.asList(1, 2, 4, 3)));
-        // d.add(new ArrayList<Integer>(Arrays.asList(-1, 3, 5, 4)));
-        // d.add(new ArrayList<Integer>(Arrays.asList(1, 2, 6, 2)));
-        // pos = new DemT(d, 1.0);
-
         ArrayList<ArrayList<Integer>> posarr = new ArrayList<ArrayList<Integer>>();
         posarr.add(new ArrayList<Integer>(Arrays.asList(1,2,3)));
         posarr.add(new ArrayList<Integer>(Arrays.asList(4,5,6)));

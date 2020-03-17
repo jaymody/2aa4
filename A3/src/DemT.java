@@ -26,6 +26,10 @@ public class DemT extends Seq2D<Integer> {
         super(S, scl);
     }
 
+    /**
+     * @brief Calculates the integer total of all the elements.
+     * @returns The integer total.
+     */
     public int total() {
         int total = 0;
 
@@ -36,6 +40,10 @@ public class DemT extends Seq2D<Integer> {
         return total;
     }
 
+    /**
+     * @brief Gets the max value.
+     * @returns The mav value.
+     */
     public int max() {
         int max = Integer.MIN_VALUE;
 
@@ -47,6 +55,10 @@ public class DemT extends Seq2D<Integer> {
         return max;
     }
 
+    /**
+     * @brief Determines of the sum of each row is greater than the sum of the one before it.
+     * @returns A boolean thats true if the above holds, else false.
+     */
     public boolean ascendingRows() {
         return false;
     }

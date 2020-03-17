@@ -12,6 +12,6 @@ import src.LuT;
 
 public class LanduseMapT extends Seq2D<LuT> {
     public LanduseMapT(ArrayList<ArrayList<LuT>> S, double scl){
-	super(S, scl);
+	    super(S, scl);
     }
 }

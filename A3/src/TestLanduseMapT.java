@@ -1,7 +1,7 @@
 /**
  * Author: S. Smith
  * Revised: Feb 23, 2020
- * 
+ *
  * Description: Testing LanduseMapT Class
  */
 
@@ -14,13 +14,9 @@ import src.LuT;
 import src.LanduseMapT;
 import src.PointT;
 
-public class TestLanduseMapT
-{
-
-   @Test
-   public void testGetNumRow()
-   {
-      assertTrue(true);
-   }
-
+public class TestLanduseMapT {
+    @Test
+    public void testGetNumRow() {
+        assertTrue(true);
+    }
 }

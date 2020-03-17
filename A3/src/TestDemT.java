@@ -1,7 +1,7 @@
 /**
  * Author: S. Smith
  * Revised: Feb 23, 2020
- * 
+ *
  * Description: Testing DemT Class
  */
 
@@ -13,13 +13,9 @@ import java.util.Arrays;
 import src.PointT;
 import src.DemT;
 
-public class TestDemT
-{
-
-   @Test
-   public void testGetNumRow()
-   {
-      assertTrue(true);
-   }
-    
+public class TestDemT {
+    @Test
+    public void testGetNumRow() {
+        assertTrue(true);
+    }
 }

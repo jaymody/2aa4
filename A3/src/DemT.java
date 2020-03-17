@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import src.Seq2D;
 
 public class DemT extends Seq2D<Integer> {
-   public DemT(ArrayList<ArrayList<Integer>> S, double scl){
-      super(S, scl);
-   }
+    public DemT(ArrayList<ArrayList<Integer>> S, double scl){
+        super(S, scl);
+    }
 
-   public int total() {
-      return 0;
-   }
+    public int total() {
+        return 0;
+    }
 }

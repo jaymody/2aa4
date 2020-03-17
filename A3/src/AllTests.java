@@ -1,7 +1,7 @@
 /**
  * Author: S. Smith
  * Revised: March 18, 2008
- * 
+ *
  * Description: Testing all of the modules
  */
 
@@ -15,6 +15,5 @@ import org.junit.runners.Suite;
     TestDemT.class
 })
 
-public class AllTests
-{
+public class AllTests {
 }

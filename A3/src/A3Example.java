@@ -1,6 +1,6 @@
 /**
  * Author: S. Smith
- * Revised: Feb 24, 2020
+ * Revised: Feb 22, 2020
  * 
  * Description: A3 Examples
  */

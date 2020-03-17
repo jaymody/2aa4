@@ -132,7 +132,7 @@ public class Seq2D<T> {
         return count;
     }
 
-     /**
+    /**
      * @brief Calculates the total area occupied by a value t.
      * @param t The value to measure the area.
      * @returns The area as a double.

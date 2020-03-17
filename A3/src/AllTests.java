@@ -1,8 +1,8 @@
 /**
- * Author: S. Smith
- * Revised: March 18, 2008
- *
- * Description: Testing all of the modules
+ * @file AllTests.java
+ * @author Jay Mody
+ * @brief Runs all the unit testing modules.
+ * @date 16/03/20 (dd/mm/yy)
  */
 
 import org.junit.runner.RunWith;

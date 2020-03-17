@@ -1,7 +1,9 @@
-// @file LanduseMapT.py
-// @author Jay Mody
-// @brief
-// @date 16/03/20 (dd/mm/yy)
+/**
+ * @file LanduseMapT.java
+ * @author Jay Mody
+ * @brief Seq2D for LuT (land use).
+ * @date 16/03/20 (dd/mm/yy)
+ */
 
 package src;
 

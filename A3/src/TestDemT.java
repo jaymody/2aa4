@@ -1,8 +1,8 @@
 /**
- * Author: S. Smith
- * Revised: Feb 23, 2020
- *
- * Description: Testing DemT Class
+ * @file TestDemT.java
+ * @author Jay Mody
+ * @brief Unit Tests for DemT.
+ * @date 16/03/20 (dd/mm/yy)
  */
 
 import org.junit.*;

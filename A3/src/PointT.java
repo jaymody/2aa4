@@ -1,7 +1,9 @@
-// @file PointT.java
-// @author Jay Mody
-// @brief
-// @date 16/03/20 (dd/mm/yy)
+/**
+ * @file PointT.java
+ * @author Jay Mody
+ * @brief Module for 2D Integer Vectors.
+ * @date 16/03/20 (dd/mm/yy)
+ */
 
 package src;
 

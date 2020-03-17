@@ -1,3 +1,10 @@
+/**
+ * @file TestPointT.java
+ * @author Jay Mody
+ * @brief Unit Tests for PointT.
+ * @date 16/03/20 (dd/mm/yy)
+ */
+
 import org.junit.*;
 import static org.junit.Assert.*;
 import src.PointT;

@@ -1,8 +1,9 @@
-// @file Seq2D.py
-// @author Jay Mody
-// @brief
-// @date 16/03/20 (dd/mm/yy)
-
+/**
+ * @file Seq2D.java
+ * @author Jay Mody
+ * @brief Generic Template Module for 2D Matrices.
+ * @date 16/03/20 (dd/mm/yy)
+ */
 package src;
 
 import java.util.ArrayList;

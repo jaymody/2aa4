@@ -1,7 +1,9 @@
-// @file DemT.py
-// @author Jay Mody
-// @brief
-// @date 16/03/20 (dd/mm/yy)
+/**
+ * @file DemT.java
+ * @author Jay Mody
+ * @brief Seq2D for Integers.
+ * @date 16/03/20 (dd/mm/yy)
+ */
 
 package src;
 

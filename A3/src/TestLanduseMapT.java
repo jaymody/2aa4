@@ -1,8 +1,8 @@
 /**
- * Author: S. Smith
- * Revised: Feb 23, 2020
- *
- * Description: Testing LanduseMapT Class
+ * @file LanduseMapT.java
+ * @author Jay Mody
+ * @brief Unit Tests for LanduseMapT.
+ * @date 16/03/20 (dd/mm/yy)
  */
 
 import org.junit.*;

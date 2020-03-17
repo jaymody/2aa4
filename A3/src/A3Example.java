@@ -1,8 +1,8 @@
 /**
- * Author: S. Smith
- * Revised: Feb 22, 2020
- *
- * Description: A3 Examples
+ * @file A3Example.java
+ * @author Jay Mody
+ * @brief Example client code.
+ * @date 16/03/20 (dd/mm/yy)
  */
 
 import java.util.ArrayList;

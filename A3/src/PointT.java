@@ -25,18 +25,37 @@ public class PointT
         this.c = col;
     }
 
+    /**
+     * @brief Gets the row value.
+     * @returns The row or "x" coordinate.
+     */
     public int row() {
         return this.r;
     }
 
+    /**
+     * @brief Gets the column value.
+     * @returns The columns or "y" coordinate.
+     */
     public int col() {
         return this.c;
     }
 
+    /**
+     * @brief Gets a new point that is translated in the x direction by dr, and the y direction by dc.
+     * @param dr Value to translate by in the x direction.
+     * @param dc Value to translate by in the y direction.
+     * @returns A new PointT at the translated point.
+     */
     public PointT translate(int dr, int dc) {
         return new PointT(this.r + dr, this.c + dc);
     }
 
+    /**
+     * @brief Checks if a PointT p is equal to this one (that is there rows and columns values are equal).
+     * @param p PointT to compare to this one.
+     * @return A boolean thats true if the points are equal, else false.
+     */
     public boolean eq(PointT p) {
         return this.r == p.row() && this.c == p.col();
     }

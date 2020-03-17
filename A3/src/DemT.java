@@ -36,6 +36,6 @@ public class DemT extends Seq2D<Integer> {
     }
 
     public boolean ascendingRows() {
-        return 0;
+        return false;
     }
 }

@@ -8,20 +8,20 @@ package src;
 import java.util.ArrayList;
 
 public class Seq2D<T> {
-    private ArrayList<ArrayList<T>> s;
-    private double scale;
-    private int nRow;
-    private int nCol;
+    protected ArrayList<ArrayList<T>> s;
+    protected double scale;
+    protected int nRow;
+    protected int nCol;
 
     public Seq2D(ArrayList<ArrayList<T>> S, double scl) throws IllegalArgumentException {
         if (scl < 0)
             throw new IllegalArgumentException("scl must be > 0");
         if (S.size() == 0)
             throw new IllegalArgumentException("|S| must be > 0 (S must not be empty)");
-        if (S[0].size() == 0)
+        if (S.get(0).size() == 0)
             throw new IllegalArgumentException("|S[0]| must be > 0 (first row of S may not be empty)");
         for (ArrayList<T> r : S)
-            if r.size() != S[0].size()
+            if (r.size() != S.get(0).size())
                 throw new IllegalArgumentException("Number of columns in each row must be the same");
 
         // copy contents to S rather than point to the object
@@ -35,21 +35,21 @@ public class Seq2D<T> {
 
         this.scale = scl;
         this.nRow = this.s.size();
-        this.nCol = this.s[0].size();
+        this.nCol = this.s.get(0).size();
     }
 
     public void set(PointT p, T v) throws IndexOutOfBoundsException {
         if (!this.validPoint(p))
             throw new IllegalArgumentException("Point p must be within the bounds of nRow and nCol");
 
-        this.s[p.row()][p.col()] = v;
+        this.s.get(p.row()).set(p.col(), v);
     }
 
     public T get(PointT p) throws IndexOutOfBoundsException {
         if (!validPoint(p))
             throw new IllegalArgumentException("Point p must be within the bounds of nRow and nCol");
 
-        return this.s[p.row()][p.col()];
+        return this.s.get(p.row()).get(p.col());
     }
 
     public int getNumRow() {
@@ -79,9 +79,9 @@ public class Seq2D<T> {
         if (!this.validRow(i))
             throw new IllegalArgumentException("i must be < nRow");
 
-        count = 0;
+        int count = 0;
 
-        for (T e : this.s[i])
+        for (T e : this.s.get(i))
             if (e == t)
                 count++;
 
@@ -92,15 +92,15 @@ public class Seq2D<T> {
         return this.count(t) * this.scale;
     }
 
-    private boolean validRow(int n) {
+    protected boolean validRow(int n) {
         return 0 <= n && n <= (this.nRow-1);
     }
 
-    private boolean validCol(int n) {
+    protected boolean validCol(int n) {
         return 0 <= n && n <= (this.nCol-1);
     }
 
-    private boolean validPoint(PointT p) {
+    protected boolean validPoint(PointT p) {
         return this.validRow(p.row()) && this.validCol(p.col());
     }
 }

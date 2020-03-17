@@ -108,5 +108,7 @@ public class TestDemT {
 
     @Test
     public void testAscendingRows() {
+        assertTrue(dem1.ascendingRows());
+        assertTrue(!dem2.ascendingRows());
     }
 }

@@ -60,6 +60,21 @@ public class DemT extends Seq2D<Integer> {
      * @returns A boolean thats true if the above holds, else false.
      */
     public boolean ascendingRows() {
-        return false;
+        int prev = this.sumRow(0);
+
+        for (int i = 1; i < this.nRow; i++) {
+            int cur = this.sumRow(1);
+            if (cur < prev)
+                return false;
+            prev = cur;
+        }
+        return true;
+    }
+
+    private int sumRow(int r) {
+        int sum = 0;
+        for (int e : this.s.get(r))
+            sum += e;
+        return sum;
     }
 }

@@ -145,23 +145,18 @@ n/a
 % syntax
 \subsection* {Syntax}
 \subsubsection* {Exported Constants}
-n/a
+None
 
 \subsubsection* {Exported Types}
-n/a
+Dottypes = \{R, G, B, Y\}
+\ \ \textit{// R for red, G for green, B for blue, Y for yellow}
 
 \subsubsection* {Exported Access Programs}
 \begin{tabular}{| l | l | l | l |}
 \hline
 \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
 \hline
-routine1 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & \\
-\hline
-routine2 & ~ & $\mathbb{Z}$ & ~\\
-\hline
-routine3 & ~ & $\mathbb{Z}$ & ~\\
-\hline
-routine3 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & ~\\
+new DotT & Dottypes & DotT & \\
 \hline
 \end{tabular}
 
@@ -169,31 +164,18 @@ routine3 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & ~\\
 % semantics
 \subsection* {Semantics}
 \subsubsection* {State Variables}
-n/a
+dot: Dottypes
 
 \subsubsection* {State Invariant}
-n/a
-
-\subsubsection* {Assumptions}
-n/a
+None
 
 \subsubsection* {Access Routine Semantics}
-\noindent routine($parameters$):
+\noindent new DotT(t):
 \begin{itemize}
-    \item transition: $variable := something$
-    \item output: $out := something$
-    \item exception: $exc := something$
+    \item transition: $dot := t$
+    \item output: $out := self$
+    \item exception: $exc := none$
 \end{itemize}
-
-
-% local functions
-\subsection*{Local Functions}
-n/a
-
-
-% considerations
-\subsubsection* {Considerations}
-n/a
 
 
 

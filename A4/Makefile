@@ -17,9 +17,12 @@ JVM = java
 	$(JC) $(JFLAGS) $(JCLASS) $*.java
 
 CLASSES = \
-	src/AllTests.java \
+    src/BoardT.java \
+    src/Dots.java \
+    src/DotT.java \
+	src/TestDots.java \
 
-MAIN = AllTests
+MAIN = TestDots
 
 default: classes
 
@@ -31,10 +34,6 @@ doc:
 
 test: src/$(MAIN).class
 	$(JVM) $(JCLASS) org.junit.runner.JUnitCore $(MAIN)
-
-expt: src/A4Example.java
-	$(JC) $(JCLASS) $(JFLAGS) src/A4Example.java
-	$(JVM) $(JCLASS) A4Example
 
 clean:
 	rm -rf html

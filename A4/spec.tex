@@ -180,6 +180,82 @@ None
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Point ADT Module %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section* {Point ADT Module}
+% module
+\subsection*{Template Module}
+PointT
+
+
+% uses
+\subsection* {Uses}
+n/a
+
+
+% syntax
+\subsection* {Syntax}
+\subsubsection* {Exported Constants}
+None
+
+\subsubsection* {Exported Types}
+PointT = ?
+
+\subsubsection* {Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new PointT & $\mathbb{Z}$, $\mathbb{Z}$ & PointT & \\
+\hline
+row & ~ & $\mathbb{Z}$ & ~\\
+\hline
+col & ~ & $\mathbb{Z}$ & ~\\
+\hline
+\end{tabular}
+
+
+% sematics
+\subsection* {Semantics}
+\subsubsection* {State Variables}
+
+$r$: $\mathbb{Z}$ \\
+$c$: $\mathbb{Z}$
+
+\subsubsection* {State Invariant}
+None
+
+\subsubsection* {Assumptions}
+\begin{itemize}
+    \item The constructor new PointT is called for each object instance before
+    any other access routine is called for that object.  The constructor cannot
+    be called on an existing object.
+\end{itemize}
+
+\subsubsection* {Access Routine Semantics}
+new PointT($row, col$):
+\begin{itemize}
+    \item transition: $r, c := row, col$
+    \item output: $out := \mathit{self}$
+    \item exception: None
+\end{itemize}
+
+\noindent row():
+\begin{itemize}
+    \item output: $out := r$
+    \item exception: None
+\end{itemize}
+
+\noindent col():
+\begin{itemize}
+    \item output: $out := c$
+    \item exception: None
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Board ADT Module %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage

@@ -256,6 +256,77 @@ new PointT($row, col$):
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Connection ADT Module %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section* {Connection ADT Module}
+% module
+\subsection*{Template Module}
+ConnectionT
+
+
+% uses
+\subsection* {Uses}
+PointT
+
+
+% syntax
+\subsection* {Syntax}
+\subsubsection* {Exported Constants}
+None
+
+\subsubsection* {Exported Types}
+ConnectionT = ?
+
+\subsubsection* {Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ConnectionT & seq of PointT & ConnectionT & IllegalArgumentException\\
+\hline
+getPoints & ~ & seq of PointT & ~\\
+\hline
+\end{tabular}
+
+
+% sematics
+\subsection* {Semantics}
+\subsubsection* {State Variables}
+points: seq of PointT
+
+\subsubsection* {State Invariant}
+None
+
+\subsubsection* {Assumptions}
+\begin{itemize}
+    \item The constructor new ConnectionT is called for each object instance before
+    any other access routine is called for that object.  The constructor cannot
+    be called on an existing object.
+\end{itemize}
+
+\subsubsection* {Access Routine Semantics}
+new ConnectionT($points$):
+\begin{itemize}
+    \item transition: $todo$
+    \item output: $todo$
+    \item exception: $todo$
+\end{itemize}
+
+\noindent getPoints():
+\begin{itemize}
+    \item output: $todo$
+    \item exception: $todo$
+\end{itemize}
+
+
+% local functions
+\subsection*{Local Functions}
+validPair: $\mbox{PointT}, \mbox{PointT} \rightarrow \mathbb{B}$\\
+$\mbox{validPair(p1, p2)} \equiv [insert sematics here]$\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Board ADT Module %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage

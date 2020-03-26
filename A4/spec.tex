@@ -345,29 +345,37 @@ BoardT
 
 % uses
 \subsection* {Uses}
-n/a
+DotT
 
 
 % syntax
 \subsection* {Syntax}
 \subsubsection* {Exported Constants}
-n/a
+None
 
 \subsubsection* {Exported Types}
-n/a
+BoardT = ?
 
 \subsubsection* {Exported Access Programs}
 \begin{tabular}{| l | l | l | l |}
 \hline
 \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
 \hline
-routine1 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & \\
+new BoardT & $\mathbb{N}$, $\mathbb{N}$, $\mathbb{Z}$ & BoardT & IllegalArgumentException \\
 \hline
-routine2 & ~ & $\mathbb{Z}$ & ~\\
+getBoard & ~ & seq of (seq of DotT) & \\
 \hline
-routine3 & ~ & $\mathbb{Z}$ & ~\\
+getHeight & ~ & $\mathbb{N}$ & \\
 \hline
-routine3 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & ~\\
+getWidth & ~ & $\mathbb{N}$ & \\
+\hline
+getSeed & ~ & $\mathbb{Z}$ & \\
+\hline
+validPoint & PointT & $\mathbb{B}$ & \\
+\hline
+shufflePoint & PointT & ~ & IllegalArgumentException \\
+\hline
+toString & ~ & String & \\
 \hline
 \end{tabular}
 
@@ -375,31 +383,89 @@ routine3 & $\mathbb{Z}$, $\mathbb{Z}$ & $\mathbb{Z}$ & ~\\
 % semantics
 \subsection* {Semantics}
 \subsubsection* {State Variables}
-n/a
+board: seq of (seq of DotT)
+nRow: $\mathbb{N}$
+nCol: $\mathbb{N}$
+seed: $\mathbb{Z}$
 
 \subsubsection* {State Invariant}
-n/a
+None
 
 \subsubsection* {Assumptions}
-n/a
+\begin{itemize}
+    \item The constructor new BoardT is called for each object instance before
+    any other access routine is called for that object.  The constructor cannot
+    be called on an existing object.
+
+    \item We assume that the board is initially populated at random (uniformly),
+    where each position has an equal probability of being a specific DotT type.
+\end{itemize}
 
 \subsubsection* {Access Routine Semantics}
-\noindent routine($parameters$):
+\noindent new BoardT($height, width, seed$):
 \begin{itemize}
-    \item transition: $variable := something$
-    \item output: $out := something$
-    \item exception: $exc := something$
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent getBoard():
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent getHeight():
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent getWidth():
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent getSeed():
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent validPoint($p$):
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent shufflePoint($p$):
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
+\end{itemize}
+
+\noindent toString():
+\begin{itemize}
+    \item transition: $[insert semantics here]$
+    \item output: $[insert semantics here]$
+    \item exception: $[insert semantics here]$
 \end{itemize}
 
 
 % local functions
 \subsection*{Local Functions}
-n/a
+validRow: $\mathbb{N} \rightarrow \mathbb{B}$\\
+$\mbox{validRow(n)} \equiv 0 \leq n \leq (\mbox{nRow} - 1)$\\
 
-
-% considerations
-\subsubsection* {Considerations}
-n/a
+validCol: $\mathbb{N} \rightarrow \mathbb{B}$\\
+$\mbox{validCol(n)} \equiv 0 \leq n \leq (\mbox{nCol} - 1)$\\
 
 
 

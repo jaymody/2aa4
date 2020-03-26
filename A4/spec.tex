@@ -303,6 +303,13 @@ None
     \item The constructor new ConnectionT is called for each object instance before
     any other access routine is called for that object.  The constructor cannot
     be called on an existing object.
+
+    \item We assume that diagonal connections are not allowed, that is a dot
+    must be directly above, below, to the right, or to the left to be considered
+    a valid connection.
+
+    \item We assume that overlapping connections and intersecting connections
+    are allowed.
 \end{itemize}
 
 \subsubsection* {Access Routine Semantics}

@@ -85,7 +85,7 @@ public class BoardT {
 
         for (int i = p.row(); i > 0; i++)
             this.board[i][p.col()] = this.board[i-1][p.col()];
-        shufflePosition(new PointT(0, p.col()));
+        shufflePoint(new PointT(0, p.col()));
     }
 
     /**
@@ -95,7 +95,7 @@ public class BoardT {
     public void shuffleBoard() {
         for (int i = 0; i < this.board.length; i++)
             for (int j = 0; j < this.board[0].length; j++)
-                shufflePosition(new PointT(i, j));
+                shufflePoint(new PointT(i, j));
     }
 
     /**
@@ -103,7 +103,7 @@ public class BoardT {
      * @param p
      * @returns TODO.
      */
-    public void shufflePosition(PointT p) {
+    public void shufflePoint(PointT p) {
         if (!validPoint(p))
             throw new IllegalArgumentException("PointT p must be a valid point in the board.");
 

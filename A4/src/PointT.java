@@ -10,8 +10,7 @@ package src;
 /**
  * @brief Module for 2D integer vectors (cartesian coordinates).
  */
-public class PointT
-{
+public class PointT {
     private int r;
     private int c;
 

@@ -8,15 +8,13 @@
 
 package src;
 
-import java.util.List;
 import java.util.ArrayList;
 import src.PointT;
 
 /**
  * @brief Template Module for ConnectionT obejcts that model connections between PointT objects.
  */
-public class ConnectionT
-{
+public class ConnectionT {
     private ArrayList<PointT> p;
 
     /**

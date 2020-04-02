@@ -18,6 +18,7 @@ public class BoardT {
     private int nRow;
     private int nCol;
     private int seed;
+    private Random r;
 
     /**
      * @brief Constructor for BoardT.
@@ -33,6 +34,7 @@ public class BoardT {
         this.nRow = height;
         this.nCol = width;
         this.seed = seed;
+        this.r = new Random(this.seed);
         this.board = new DotT[this.nRow][this.nCol];
 
         this.shuffleBoard();
@@ -103,8 +105,8 @@ public class BoardT {
      * @throws IllegalArgumentException Thrown if p is not a valid point in the board.
      */
     public void shuffleBoard() {
-        for (int i = 0; i < this.board.length; i++)
-            for (int j = 0; j < this.board[0].length; j++)
+        for (int i = 0; i < this.nRow; i++)
+            for (int j = 0; j < this.nCol; j++)
                 shufflePoint(new PointT(i, j));
     }
 
@@ -113,13 +115,13 @@ public class BoardT {
      * @param p
      * @throws IllegalArgumentException Thrown if p is not a valid point in the board.
      */
-    public void shufflePoint(PointT p) {
+    public DotT shufflePoint(PointT p) {
         if (!validPoint(p))
             throw new IllegalArgumentException("PointT p must be a valid point in the board.");
 
-        Random r = new Random(this.seed);
-        int x = r.nextInt(DotT.class.getEnumConstants().length);
+        int x = this.r.nextInt(DotT.class.getEnumConstants().length);
         board[p.row()][p.col()] = DotT.class.getEnumConstants()[x];
+        return DotT.class.getEnumConstants()[x];
     }
 
     /**
@@ -155,8 +157,8 @@ public class BoardT {
      */
     public String toString() {
         String s = "";
-        for (int i = 0; i < this.board.length; i++) {
-            for (int j = 0; j < this.board[0].length; j++)
+        for (int i = 0; i < this.nRow; i++) {
+            for (int j = 0; j < this.nCol; j++)
                 s += this.board[i][j] + " ";
             s += "\n";
         }

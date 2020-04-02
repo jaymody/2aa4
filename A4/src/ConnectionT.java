@@ -81,7 +81,7 @@ public class ConnectionT {
     }
 
     private boolean isValid(PointT a, PointT b) {
-        return isHorizontal(a, b) && isVertical(a, b);
+        return isHorizontal(a, b) || isVertical(a, b);
     }
 
     private boolean isHorizontal(PointT a, PointT b) {

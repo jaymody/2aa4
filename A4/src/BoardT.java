@@ -8,9 +8,6 @@
 package src;
 
 import java.util.Random;
-
-import org.graalvm.compiler.hotspot.word.PointerCastNode;
-
 import src.DotT;
 
 /**

@@ -55,7 +55,7 @@ public class PointT {
      * @param p PointT to compare to this one.
      * @return A boolean thats true if the points are equal, else false.
      */
-    public boolean eq(PointT p) {
+    public boolean equals(PointT p) {
         return this.r == p.row() && this.c == p.col();
     }
 }

@@ -8,6 +8,9 @@
 package src;
 
 import java.util.Random;
+
+import org.graalvm.compiler.hotspot.word.PointerCastNode;
+
 import src.DotT;
 
 /**
@@ -36,6 +39,15 @@ public class BoardT {
         this.board = new DotT[this.nRow][this.nCol];
 
         this.shuffleBoard();
+    }
+
+    /**
+     * @brief TODO.
+     * @param p
+     * @returns TODO.
+     */
+    public DotT get(PointT p) {
+        return this.board[p.row()][p.col()];
     }
 
     /**
@@ -75,7 +87,7 @@ public class BoardT {
     }
 
     /**
-    * @brief TODO.
+    * @brief Removes point p and let's the dots above it "fall" (shuffles the topmost entry).
     * @returns TODO.
     * @throws IllegalArgumentException Thrown if p is not a valid point in the board.
     */
@@ -91,6 +103,7 @@ public class BoardT {
     /**
      * @brief TODO.
      * @returns TODO.
+     * @throws IllegalArgumentException Thrown if p is not a valid point in the board.
      */
     public void shuffleBoard() {
         for (int i = 0; i < this.board.length; i++)
@@ -101,7 +114,7 @@ public class BoardT {
     /**
      * @brief TODO.
      * @param p
-     * @returns TODO.
+     * @throws IllegalArgumentException Thrown if p is not a valid point in the board.
      */
     public void shufflePoint(PointT p) {
         if (!validPoint(p))
@@ -117,7 +130,7 @@ public class BoardT {
      * @param p
      * @returns TODO.
      */
-    private boolean validPoint(PointT p) {
+    public boolean validPoint(PointT p) {
         return validRow(p) && validCol(p);
     }
 

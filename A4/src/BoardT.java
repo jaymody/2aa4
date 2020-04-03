@@ -94,7 +94,7 @@ public class BoardT {
         if (!validPoint(p))
             throw new IllegalArgumentException("PointT p must be a valid point in the board.");
 
-        for (int i = p.row(); i > 0; i++)
+        for (int i = p.row(); i > 0; i--)
             this.board[i][p.col()] = this.board[i-1][p.col()];
         shufflePoint(new PointT(0, p.col()));
     }

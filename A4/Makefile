@@ -17,12 +17,12 @@ JVM = java
 	$(JC) $(JFLAGS) $(JCLASS) $*.java
 
 CLASSES = \
+    src/ConnectionT.java \
     src/BoardT.java \
     src/Dots.java \
     src/DotT.java \
-	src/TestDots.java \
 
-MAIN = TestDots
+MAIN = Main
 
 default: classes
 
@@ -32,8 +32,12 @@ doc:
 	doxygen doxConfig
 	cd latex && $(MAKE)
 
-test: src/$(MAIN).class
-	$(JVM) $(JCLASS) org.junit.runner.JUnitCore $(MAIN)
+test: $(MAIN).class
+	$(JC) $(JCLASS) $(JFLAGS) Main.java
+	$(JVM) $(JCLASS) Main
+
+# test: src/$(MAIN).class
+# 	$(JVM) $(JCLASS) org.junit.runner.JUnitCore $(MAIN)
 
 clean:
 	rm -rf html

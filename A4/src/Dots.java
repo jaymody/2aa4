@@ -22,7 +22,6 @@ import src.ConnectionT;
 public class Dots {
     public final static int BOARD_HEIGHT = 6;
     public final static int BOARD_WIDTH = 6;
-    public final static int DEFAULT_SEED = 1234;
     public final static int DEFAULT_OBJECTIVENUM = 10;
     public final static int DEFAULT_MAXMOVES = 10;
 
@@ -34,12 +33,12 @@ public class Dots {
     private int seed;
 
     public Dots() {
-        this.gameboard = new BoardT(BOARD_HEIGHT, BOARD_WIDTH, DEFAULT_SEED);
-        this.seed = DEFAULT_SEED;
+        this.gameboard = new BoardT(BOARD_HEIGHT, BOARD_WIDTH);
+        this.seed = 0;
     }
 
     public Dots(int seed) {
-        this.gameboard = new BoardT(BOARD_HEIGHT, BOARD_WIDTH, DEFAULT_SEED);
+        this.gameboard = new BoardT(BOARD_HEIGHT, BOARD_WIDTH, seed);
         this.seed = seed;
     }
 

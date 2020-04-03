@@ -41,6 +41,25 @@ public class BoardT {
     }
 
     /**
+     * @brief Constructor for BoardT.
+     * @param height
+     * @param width
+     * @throws
+     */
+    public BoardT(int height, int width) throws IllegalArgumentException {
+        if (height <= 0 || width <= 0)
+            throw new IllegalArgumentException("Height and width must be greater than 0.");
+
+        this.nRow = height;
+        this.nCol = width;
+        this.seed = 0;
+        this.r = new Random();
+        this.board = new DotT[this.nRow][this.nCol];
+
+        this.shuffleBoard();
+    }
+
+    /**
      * @brief TODO.
      * @param p
      * @returns TODO.

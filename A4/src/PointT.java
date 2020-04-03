@@ -58,4 +58,12 @@ public class PointT {
     public boolean equals(PointT p) {
         return this.r == p.row() && this.c == p.col();
     }
+
+    /**
+     * @brief Displays the point as a string.
+     * @return String represenation of the point (r, c)
+     */
+    public String toString() {
+        return "(" + this.r + ", " + this.c + ")";
+    }
 }

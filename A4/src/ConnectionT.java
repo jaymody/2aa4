@@ -30,8 +30,6 @@ public class ConnectionT {
     public ConnectionT(ArrayList<PointT> points) throws IllegalArgumentException {
         if (points.size() < 2)
             throw new IllegalArgumentException("Number of points must be 2 or more");
-        else if (points.get(0).equals(points.get(1)))
-            throw new IllegalArgumentException("A connection with only 2 points may not be the same point");
 
         for (int i = 1; i < points.size(); i++)
             if (!isValid(points.get(i), points.get(i-1)))
@@ -50,12 +48,15 @@ public class ConnectionT {
             int ymin = Math.min(a.col(), b.col());
             int ymax = Math.max(a.col(), b.col());
 
-            for (int x = xmin; x < xmax; x++)
-                for (int y = ymin; y < ymax; y++)
-                    s.add(new PointT(x, y));
+            for (int x = xmin; x <= xmax; x++)
+                for (int y = ymin; y <= ymax; y++)
+                    this.s.add(new PointT(x, y));
 
             a = b;
         }
+
+        if (this.s.size() <= 1)
+            throw new IllegalArgumentException("A connection with only 1 point is not allowed");
     }
 
     /**

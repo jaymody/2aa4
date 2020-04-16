@@ -766,11 +766,9 @@ but this is not the case as the UML specified that T extended Comparable.
 \hline
 \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
 \hline
-new Seq1D & seq of T, TieHandler & Seq1D & \\
+new Seq1D & seq of T & Seq1D & \\
 \hline
-setTieHandler & TieHandler &  & \\
-\hline
-rank & T & $\mathbb{R}$ & IllegalArgumentException\\
+rank & T, TieHandler, Comparator$<$T$>$ & $\mathbb{R}$ & IllegalArgumentException\\
 \hline
 
 \end{tabular}
@@ -778,7 +776,6 @@ rank & T & $\mathbb{R}$ & IllegalArgumentException\\
 \subsubsection* {State Variables}
 
 $s$: seq of T\\
-tieHandler: TieHandler
 
 \end{enumerate}
 \end{minipage}

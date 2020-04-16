@@ -513,7 +513,8 @@ new Seq1D($S$):
 \noindent rank($p$):
 \begin{itemize}
 \item output: \wss{Calculate the rank of $p$ in the sequence, taking into
-    account if there are ties}
+    account if there are ties} \\
+    $out := t.rCalc(indexSet(p, sort(s)))$
 \item exception: \wss{A $p$ value is illegal if it does not appear in the
     sequence} \\
     $exc := \lnot (p \in s) \Rightarrow IllegalArgumentException$

@@ -741,8 +741,21 @@ under Expected, so inplace I shortened it to IllArgExc}.\\
 \noindent{Fill in the itemized list below}
 
 \begin{enumerate}[a.]
-\item \wss{Your answer here.}
-\item \wss{Your answer here.}
+\item \wss{Your answer here.} \\
+We could define an additional class called AvgCalc that also implements
+TieHandler where rCalc would output the average between the max and min values
+of the sequence of integers. Average here is ambiguous, as it could mean the
+mean value, median value, mode value, or some other variation of an average.
+No changes would need to be made to Seq1D (or any other class other than the new
+one).
+
+\item \wss{Your answer here.} \\
+With my given implementation, as long as StudentT extends Comparable (in other
+words, it has a valid compareTo function), no other necessary changes would need
+to be made. We could change the way Seq1D works, where inplace of having the generic
+type T be comparable, we have the client pass in a Comparator that compares type T,
+but this is not the case as the UML specified that T extended Comparable.
+
 \item \wss{Revise the following portions of the syntax section of the
     functional programming version of Seq1D.  The spec given is for the OO
     version.  You can make any changes you feel are necessary. }

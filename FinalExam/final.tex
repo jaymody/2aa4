@@ -59,9 +59,9 @@ MCMASTER UNIVERSITY FINAL EXAMINATION \hfill April 16, 2020
 
 %\begin{minipage}[t]{1.0\textwidth}
 
-NAME: \wss{Enter your name here}\\[1ex]
+NAME: \wss{Jay Mody}\\[1ex]
 
-Student ID: \wss{Enter your student number here} \\[2mm]
+Student ID: \wss{400195508} \\[2mm]
 
 \noindent
 \rule[3 mm]{\textwidth}{0.5mm}
@@ -85,14 +85,14 @@ my responsibility to understand what constitutes academic dishonesty under the
 
 \begin{enumerate}
 
-\item For taking tests remotely: 
+\item For taking tests remotely:
 \begin{itemize}
 \item Turn off all unnecessary programs, especially Netflix, YouTube, games like
   Xbox or PS4, anything that might be downloading or streaming.
 \item If your house is shared, ask others to refrain from doing those activities
   during the test.
 \item If you can, connect to the internet via a wired connection.
-\item Move close to the Wi-Fi hub in your house. 
+\item Move close to the Wi-Fi hub in your house.
 \item Restart your computer, 1-2 hours before the exam. A restart can be very
   helpful for several computer hiccups.
 \item Commit and push your tex file, compiled pdf file, and code files
@@ -134,18 +134,31 @@ efficiency, and c) maintainability.\\
 \begin{enumerate}[a)]
 \item Reliability
 \begin{itemize}
-\item Positive or negative?
-\item Explanation
+\item Positive
+\item Reusability requires that a piece of software can be reused in various
+contexts. This often means that the software needs to general, covering a more
+general use case. As a consequence, the software also becomes more
+reliable, since it is designed to work in a wider range of use cases.
+For example, python packages like numpy have been thouroughly tested, reused,
+and maintained for years. As a result, we know that we can rely on it to work
+when we reuse it in our own software.
 \end{itemize}
 \item Efficiency
 \begin{itemize}
-\item Positive or negative?
-\item Explanation
+\item Negative
+\item In most cases, software that is more general (reusable software is often
+general) will likely be less efficient than software that is built for very
+narrow and specific use cases. This is because reusable/generable software
+contains a lot of overhead to cover a wider array of contexts.
 \end{itemize}
 \item Maintainability
 \begin{itemize}
-\item Positive or negative?
-\item Explanation
+\item Positive
+\item Software that is reusable will include interfaces, modules, and will
+preserve seperation of concerns. All of these properties make the software
+better at anticipating change, making it easier to maintain the software
+(whether that is adding additional functionality of making bug fixes).
+
 \end{itemize}
 \end{enumerate}
 
@@ -154,8 +167,8 @@ efficiency, and c) maintainability.\\
 \newpage
 
 \question{5 marks} When you insert a USB key into your computer you can read and
-write to the USB key in the same way as you read and write to your hard drive.  What
-software engineering principles are being applied here?  Please justify your
+write to the USB key in the same way as you read and write to your hard drive. What
+software engineering principles are being applied here? Please justify your
 answer.\\
 
 \noindent \wss{Fill in the itemized list below with your answers}
@@ -185,9 +198,18 @@ under 5\%, then set variable top\_up\_req to True.''
 \noindent \wss{Fill in the itemized list below with your answers}
 
 \begin{itemize}
-\item Criterion 1 - explanation
-\item Criterion 2 - explanation
-\item ...
+\item Ambiguous - The specification is ambiguous because it doesn't specify
+whether it's 5\% relative to the target fluid level, or 5\% relative to the
+measured water level.
+\item Validatable - The specification is validatable because we can
+arithmetically verify the outcome of the specification (unit testable).
+\item Unabstract - The specification is not abstract, since the 5\% cutoff
+is hard coded. A more abstract case would be: ``If the difference between the
+measured water level and the target fluid level is under a certain
+percentage threshold (default 5\%), then set variable top\_up\_req to True.''
+\item Consistent/Clear - The specification is consistent since the cause and
+consequence are clear, with no contradicting cases.
+\item Incremental, Complete, Clear
 \end{itemize}
 
 \end{minipage}
@@ -232,7 +254,7 @@ implements the Comparable interface and inherits Object, respectively.
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 \newpage
 
 \noindent
@@ -277,7 +299,7 @@ None
 
 \subsubsection* {Exported Types}
 
-None 
+None
 
 \subsubsection* {Exported Access Programs}
 
@@ -316,7 +338,7 @@ None
 
 \subsubsection* {Exported Types}
 
-None 
+None
 
 \subsubsection* {Exported Access Programs}
 
@@ -373,7 +395,7 @@ None
 
 \subsubsection* {Exported Types}
 
-None 
+None
 
 \subsubsection* {Exported Access Programs}
 
@@ -660,11 +682,11 @@ your repo.\\
 \noindent{Fill in the itemized list below}
 
 \begin{enumerate}[a.]
-\item \wss{Your answer here.} 
+\item \wss{Your answer here.}
 \item \wss{Your answer here.}
 \item \wss{Revise the following portions of the syntax section of the
     functional programming version of Seq1D.  The spec given is for the OO
-    version.  You can make any changes you feel are necessary. }  
+    version.  You can make any changes you feel are necessary. }
 
 \subsubsection* {Exported Access Programs}
 

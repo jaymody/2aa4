@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public class Seq1D<T extends Comparable> {
     private ArrayList<T> s;
-    public ArrayList<T> sorted;
+    private ArrayList<T> sorted;
     private TieHandler tieHandler;
 
     public Seq1D(ArrayList<T> S) {

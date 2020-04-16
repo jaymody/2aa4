@@ -209,7 +209,11 @@ measured water level and the target fluid level is under a certain
 percentage threshold (default 5\%), then set variable top\_up\_req to True.''
 \item Consistent/Clear - The specification is consistent since the cause and
 consequence are clear, with no contradicting cases.
-\item Incremental, Complete, Clear
+\item Complete - Assuming the specification has internal definitons for
+measure water level, target fluid, and top\_up\_req, the specification is
+internally complete leaving no untied ends and missing parts. Even though it
+doesn't state what to do in the event that the fluid level's aren't within
+5\%, we assume that we don't change the value of top\_up\_req.
 \end{itemize}
 
 \end{minipage}
@@ -369,7 +373,8 @@ None
 rCalc($s$)
 \begin{itemize}
 \item output: \wss{The minimum element in s, where s is a sequence of natural
-    numbers}
+    numbers} \\
+    $\exists \ i : s \ .\ (\forall \ j : s \ .\ s[i] >= s[j]) \Rightarrow out := s[i]$
 \item exception: none
 \end{itemize}
 
@@ -426,7 +431,8 @@ None
 rCalc($s$)
 \begin{itemize}
 \item output: \wss{The maximum element in s, where s is a sequence of natural
-    numbers}
+    numbers} \\
+    $\exists \ i : s \ .\ (\forall \ j : s \ .\ s[i] <= s[j]) \Rightarrow out := s[i]$
 \item exception: none
 \end{itemize}
 
@@ -448,7 +454,8 @@ Comparable, TieHandler
 
 \subsubsection* {Exported Types}
 
-\wss{What goes here?}
+\wss{What goes here?} \\
+Seq1D(T) = ?
 
 \subsubsection* {Exported Constants}
 
@@ -508,7 +515,8 @@ new Seq1D($S$):
 \item output: \wss{Calculate the rank of $p$ in the sequence, taking into
     account if there are ties}
 \item exception: \wss{A $p$ value is illegal if it does not appear in the
-    sequence}
+    sequence} \\
+    $exc := \lnot (p \in s) \Rightarrow IllegalArgumentException$
 \end{itemize}
 
 \subsection*{Local Functions}
